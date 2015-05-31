@@ -8,36 +8,4 @@
 	</buildSpec>
 	<natures>
 	</natures>
-	<linkedResources>
-		<link>
-			<name>data/2008-Table.csv</name>
-			<type>1</type>
-			<location>/am/state-opera/home1/neritlewe/git/SWEN303-ANZChampionship/ANZChampionship/data/2008-Table.csv</location>
-		</link>
-		<link>
-			<name>data/2009-Table.csv</name>
-			<type>1</type>
-			<location>/am/state-opera/home1/neritlewe/git/SWEN303-ANZChampionship/ANZChampionship/data/2009-Table.csv</location>
-		</link>
-		<link>
-			<name>data/2010-Table.csv</name>
-			<type>1</type>
-			<location>/am/state-opera/home1/neritlewe/git/SWEN303-ANZChampionship/ANZChampionship/data/2010-Table.csv</location>
-		</link>
-		<link>
-			<name>data/2011-Table.csv</name>
-			<type>1</type>
-			<location>/am/state-opera/home1/neritlewe/git/SWEN303-ANZChampionship/ANZChampionship/data/2011-Table.csv</location>
-		</link>
-		<link>
-			<name>data/2012-Table.csv</name>
-			<type>1</type>
-			<location>/am/state-opera/home1/neritlewe/git/SWEN303-ANZChampionship/ANZChampionship/data/2012-Table.csv</location>
-		</link>
-		<link>
-			<name>data/2013-Table.csv</name>
-			<type>1</type>
-			<location>/am/state-opera/home1/neritlewe/git/SWEN303-ANZChampionship/ANZChampionship/data/2013-Table.csv</location>
-		</link>
-	</linkedResources>
 </projectDescription>
