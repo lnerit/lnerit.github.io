@@ -1,1 +1,24 @@
-@CHARSET "UTF-8";
+<!DOCTYPE html>
+<style>
+	div{
+		font-size:12px sans-serif;
+		color:white;
+		background-color:steelblue;
+		padding:5px;
+		margin:1px;
+	}
+	title{
+		font-size:14px sans-serif;
+	}
+	.svg,.graphArea,.outer{
+		color:steelblue;
+		background-color:white;
+	}
+	.text{
+		padding:0px;
+		margin:0px;
+		padding-bottom:0.1px;
+		position:relative;
+		top:-20px;
+	}
+</style>
