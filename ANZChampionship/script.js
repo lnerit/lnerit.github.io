@@ -10,7 +10,6 @@ var data=[{location:"TSB Bank,Wellington",lat:-41.285361, lng:174.778647},
 	  {location:"Brisbane Convention & Exhibition Centre",lat:-27.476503, lng:153.018363},
 	  {location:"Trusts Stadium, Auckland",lat:-36.860666, lng:174.634973},
 		  {location:"Energy Events Centre, Rotorua",lat:-38.135789, lng:176.260872},
-		  {location:"New Kirk 104",lat:-41.28854138,lng:174.76868123}
 	]
 //This function is called upon clicking the nodes to determin the location the map.
 //If the name of the clicked node matches those lecture venue names, then
