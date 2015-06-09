@@ -8,8 +8,17 @@
 <script type="text/javascript" src="http://d3js.org/d3.v3.min.js"></script>
 <script src="https://maps.googleapis.com/maps/api/js?v=3.exp"></script>
  <script type="text/javascript" src="script.js"></script>
+ 
+ 
+ <script type="text/javascript" src="js/jquery-iu.min.js"></script>
+ <script type="text/javascript" src="js/jquery-2.1.4.min.js"></script>
+ 
+ 
+ 
 <link rel="stylesheet" type="text/css" href="style.css">
 <script type="text/javascript">
+ 
+	//Google maps stuff below. 
 	var lat=-41.285361,lng=174.778647;
 	var locationName="TSB Bank,Wellington";
 	function initialize() {
@@ -115,15 +124,15 @@
 			</div>
 
 			<div id = "canvas" class = "svg" style = "float: right; width: 70%; height: 600px; border: 2px; border-style: solid; border-radius: 15px;">
-				  <script>
-				  $(function() {
-				    $( "#tabs" ).tabs();
-				  });
-				  </script>
-				</head>
-				<body>
+				<script type="text/javascript">
 				
-				<div id="visualization">
+				//load the tabs.. 
+				$(document).ready(function() { 
+				  $( "#tabs" ).tabs({active: 1});
+				});
+				</script>
+				
+				<div id="tabs">
 				  <ul>
 				    <li><a href="#visualization-1">Season Placement</a></li>
 				    <li><a href="#visualization-2">Home VS Away</a></li>
@@ -137,7 +146,7 @@
 				    <p>Visualization 2 goes here. Home VS Away games.  </p>
 				    <svg id="visual_holder2" width = "100%" height = "100%"></svg>
 				  </div>
-				  <div id="tabs-3">
+				  <div id="visualization-3">
 				    <p>Visualization 3 goes here. Round by round.  </p>
 				    <svg id="visual_holder3" width = "100%" height = "100%"></svg>
 				  </div>
