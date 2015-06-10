@@ -35,7 +35,7 @@ function click(d) {
 
 */
 
-function initialize(lat,lng,) {
+function initialize(lat,lng) {
        latlng=new google.maps.LatLng(lat,lng,locationName);
   var mapOptions = {
     zoom: 18,

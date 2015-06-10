@@ -7,16 +7,21 @@
 <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
 <script type="text/javascript" src="http://d3js.org/d3.v3.min.js"></script>
 <script src="https://maps.googleapis.com/maps/api/js?v=3.exp"></script>
- <script type="text/javascript" src="script.js"></script>
- 
- <script type="text/javascript" src="js/jquery-2.1.4.min.js"></script>
- <script type="text/javascript" src="js/jquery-ui.min.js"></script>
- 
- 
+<script type="text/javascript" src="script.js"></script>
+
+<link rel="stylesheet" href="http://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css" />
+  <script src="http://code.jquery.com/jquery-1.9.1.js"></script>
+  <script src="http://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
+  <script>
+  $(function() {
+    $( "#tabs" ).tabs();
+  });
+  </script>
+
 <link rel="stylesheet" type="text/css" href="style.css">
 <script type="text/javascript">
- 
-	//Google maps stuff below. 
+
+	//Google maps stuff below.
 	var lat=-41.285361,lng=174.778647;
 	var locationName="TSB Bank,Wellington";
 	function initialize() {
@@ -38,21 +43,29 @@
 	google.maps.event.addDomListener(window, 'load', initialize);
 
   </script>
-
+  <script type="text/javascript">
+				//load the tabs..
+				(function(){
+					$( "#tabs" ).tabs();
+				});
+				</script>
 </head>
 <body>
 <div class="outer" style="border: 2px solid;border-style:solid;border-radius:15px;">
-<div class="inputs" style="border:2px solid;border-style:solid;border-radius:15px;">
-    <div class="image" id="image" style="border-width:1px;border-style:solid;border-radius:15px;with:15px;height:200xp">
-		<div "width:15px; margin: 0 auto; float: left;">
-					 <img alt="Logo" src="images/anz_champ_logo.png" style="width:100px;height:100px;"/>
+     <div style="float:left">
+					 <img alt="Logo" src="images/anz_champ_logo.png" style="height: 95px; "/>
 		</div>
-		<div "width:15px; margin: 0 auto; float: right;">
-		</div>
+	 <div class="title" style="border-width:1px;border-style:thin;border-radius:15px;height: 91px;float:left; width: 80%;position: relative; top: 10px; left: 259px;">
+		<p align="center"><h4><p align="center" font-size="300px"><font size=100>Welcome to ANZ Visualiser</font></p></h4></p>
 	</div>
+<div class="inputs" style="border:2px solid;border-style:solid;border-radius:15px;">
+
+    <!--  <div class="image" id="image" style="border-width:1px;border-style:solid;border-radius:15px;with:20px;height: 91px; width: 239px;position: relative; top: 0px; right:-4px;">
+	</div> -->
+
 
 		<div class = "graphArea">
-		<div class = "info" style = "float: right; border: 2px; border-style: solid; border-radius: 15px; width: 16%; height: 600px; ">
+		<div class = "info" style = "float: right; border: 2px; border-style: solid; border-radius: 15px; width: 16%; height: 600px; right:-4px;">
 				<p style = "text-align: center; font-weight: bold; text-decoration: underline;"> FILTER OPTIONS </p><br>
 				<div style = "position: relative; top: 0px; right: 4px;">
 				  <div class = "filterBorder" style = "position:relative;top:0px;float: right; border: 2px; border-style: solid; border-radius: 15px;width:95%;height:100px;">
@@ -122,13 +135,8 @@
 			</div>
 
 			<div id = "canvas" class = "svg" style = "float: right; width: 70%; height: 600px; border: 2px; border-style: solid; border-radius: 15px;">
-				<script type="text/javascript">
-				
-				//load the tabs.. 
-				$(document).ready(function(){	$( "#tabs" ).tabs({active: 1});  });
-				</script>
-				
-				<div id="tabs">
+
+				<div id="tabs" >
 				  <ul>
 				    <li><a href="#visualization-1">Season Placement</a></li>
 				    <li><a href="#visualization-2">Home VS Away</a></li>
@@ -136,15 +144,15 @@
 				  </ul>
 				  <div id="visualization-1">
 				    <p>Visualization 1 goes here. Season Placement. </p>
-				    <svg id="visual_holder1" width = "100%" height = "100%"></svg>
+				    <svg id="visual_holder1"; style="width:100%; height:440px;border-style: thin; border-radius: 15px;"></svg>
 				  </div>
 				  <div id="visualization-2">
 				    <p>Visualization 2 goes here. Home VS Away games.  </p>
-				    <svg id="visual_holder2" width = "100%" height = "100%"></svg>
+				    <svg id="visual_holder2" width = "100%" height = "440px"></svg>
 				  </div>
 				  <div id="visualization-3">
 				    <p>Visualization 3 goes here. Round by round.  </p>
-				    <svg id="visual_holder3" width = "100%" height = "100%"></svg>
+				    <svg id="visual_holder3" width = "100%" height = "440px"></svg>
 				  </div>
 				</div>
 			</div>
