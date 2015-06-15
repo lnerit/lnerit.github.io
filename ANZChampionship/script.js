@@ -61,45 +61,19 @@ function winRatio(a,b) {
 	return b.wins/(b.wins + b.losses) - a.wins/(a.wins + a.losses);
 }
 function isNumber(n){
-	return typeof n == 'number' && !isNaN(n - n);
+   return typeof n == 'number' && !isNaN(n - n);
 }
 /*
-*
-*/
+ *
+ */
 
 //Load all the csv files
 
 d3.csv('data/2008-Table1.csv', function(data){
 	console.log(data);
-	allSeasons['2008'] = data;
-	data.forEach(function(i) {
-		i.year = 2008;
-		var team = allTeams[i['Home Team']];
-		if (team == undefined) {
-			allTeams[i['Home Team']] = [i];
-		} else {
-			team.push(i);
-		}
-
-		team = allTeams[i['Away Team']];
-		if (team == undefined) {
-			allTeams[i['Away Team']] = [i];
-		} else {
-			team.push(i);
-		}
-
-		var venue = allVenues[i['Venue']];
-		if (venue == undefined) {
-			allVenues[i['Venue']] = [i];
-		} else {
-			venue.push(i);
-		}
-	});
-
-	d3.csv('data/2009-Table1.csv', function(data){
-		allSeasons['2009'] = data;
+		allSeasons['2008'] = data;
 		data.forEach(function(i) {
-			i.year = 2009;
+			i.year = 2008;
 			var team = allTeams[i['Home Team']];
 			if (team == undefined) {
 				allTeams[i['Home Team']] = [i];
@@ -121,10 +95,11 @@ d3.csv('data/2008-Table1.csv', function(data){
 				venue.push(i);
 			}
 		});
-		d3.csv('data/2010-Table1.csv', function(data){
-			allSeasons['2010'] = data;
+
+		d3.csv('data/2009-Table1.csv', function(data){
+			allSeasons['2009'] = data;
 			data.forEach(function(i) {
-				i.year = 2010;
+				i.year = 2009;
 				var team = allTeams[i['Home Team']];
 				if (team == undefined) {
 					allTeams[i['Home Team']] = [i];
@@ -146,10 +121,10 @@ d3.csv('data/2008-Table1.csv', function(data){
 					venue.push(i);
 				}
 			});
-			d3.csv('data/2011-Table1.csv', function(data){
-				allSeasons['2011'] = data;
+			d3.csv('data/2010-Table1.csv', function(data){
+				allSeasons['2010'] = data;
 				data.forEach(function(i) {
-					i.year = 2011;
+					i.year = 2010;
 					var team = allTeams[i['Home Team']];
 					if (team == undefined) {
 						allTeams[i['Home Team']] = [i];
@@ -171,10 +146,10 @@ d3.csv('data/2008-Table1.csv', function(data){
 						venue.push(i);
 					}
 				});
-				d3.csv('data/2012-Table1.csv', function(data){
-					allSeasons['2012'] = data;
+				d3.csv('data/2011-Table1.csv', function(data){
+					allSeasons['2011'] = data;
 					data.forEach(function(i) {
-						i.year = 2012;
+						i.year = 2011;
 						var team = allTeams[i['Home Team']];
 						if (team == undefined) {
 							allTeams[i['Home Team']] = [i];
@@ -196,12 +171,10 @@ d3.csv('data/2008-Table1.csv', function(data){
 							venue.push(i);
 						}
 					});
-
-					d3.csv('data/2013-Table1.csv', function(data) {
-
-						allSeasons['2013'] = data;
+					d3.csv('data/2012-Table1.csv', function(data){
+						allSeasons['2012'] = data;
 						data.forEach(function(i) {
-							i.year = 2013;
+							i.year = 2012;
 							var team = allTeams[i['Home Team']];
 							if (team == undefined) {
 								allTeams[i['Home Team']] = [i];
@@ -218,43 +191,70 @@ d3.csv('data/2008-Table1.csv', function(data){
 
 							var venue = allVenues[i['Venue']];
 							if (venue == undefined) {
-								allVenues[i['Venue']] = [i];
+									allVenues[i['Venue']] = [i];
 							} else {
-								venue.push(i);
+									venue.push(i);
 							}
 						});
-						//Remove underdefined and emty entries
 
-						delete allVenues[undefined];
-						delete allVenues[''];
+						d3.csv('data/2013-Table1.csv', function(data) {
 
-						console.log(allSeasons);
-						console.log(allTeams);
-						console.log(allVenues);
+							allSeasons['2013'] = data;
+							data.forEach(function(i) {
+								i.year = 2013;
+								var team = allTeams[i['Home Team']];
+								if (team == undefined) {
+									allTeams[i['Home Team']] = [i];
+								} else {
+									team.push(i);
+								}
 
-						var div = d3.select('.rivalry').append('div');
+								team = allTeams[i['Away Team']];
+								if (team == undefined) {
+									allTeams[i['Away Team']] = [i];
+								} else {
+									team.push(i);
+								}
 
-						var select = div.append('select').attr('id', 'canvas').attr('class', 'dropdown');
-						select.node().addEventListener('change', function(e) {showYear = this.value;});
+								var venue = allVenues[i['Venue']];
+								if (venue == undefined) {
+									allVenues[i['Venue']] = [i];
+								} else {
+									venue.push(i);
+								}
+							});
+							//Remove underdefined and emty entries
 
-						select.selectAll('option')
-						.data(['All'].concat(listYears))
-						.enter().append('option')
-						.attr('value', function(d) {return d;})
-						.text(function(d) {return d;});
+							delete allVenues[undefined];
+							delete allVenues[''];
 
-						select = div.append('select').attr('id', 'visual_holder3').attr('class', 'dropdown');
+							console.log(allSeasons);
+							console.log(allTeams);
+							console.log(allVenues);
 
-						select.node().addEventListener('change', function(e) {showFinal = this.value;});
-						select.selectAll('option')
-						.data(['All', 'Regular', 'Finals'])
-						.enter().append('option')
-						.attr('value', function(d) {return d;})
-						.text(function(d) {return d;});
+							var div = d3.select('.rivalry').append('div');
+
+							var select = div.append('select').attr('id', 'canvas').attr('class', 'dropdown');
+							select.node().addEventListener('change', function(e) {showYear = this.value;});
+
+							select.selectAll('option')
+							.data(['All'].concat(listYears))
+							.enter().append('option')
+							.attr('value', function(d) {return d;})
+							.text(function(d) {return d;});
+
+							select = div.append('select').attr('id', 'visual_holder3').attr('class', 'dropdown');
+
+							select.node().addEventListener('change', function(e) {showFinal = this.value;});
+							select.selectAll('option')
+							.data(['All', 'Regular', 'Finals'])
+							.enter().append('option')
+							.attr('value', function(d) {return d;})
+							.text(function(d) {return d;});
+
+						});
 
 					});
-
-				});
 
 			});
 
