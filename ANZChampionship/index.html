@@ -41,141 +41,132 @@
 </head>
 
 <body onload="LoadYearToFilterBox()">
-<div class="outer" style="border: 2px solid;border-style:solid;border-radius:15px;">
-     <div style="float:left">
-					 <img alt="Logo" src="images/anz_champ_logo.png" style="height: 95px; "/>
-		</div>
-	 <div class="title" style="border-width:1px;border-style:thin;border-radius:15px;height: 91px;float:left; width: 80%;position: relative; top: 10px; left: 259px;">
-		<p align="center"><h4><p align="center"><font size="10%">ANZ Netball Championship Visualiser</font></p></h4></p>
+	<div class="outer" style="border: 2px solid; border-style:solid; border-radius:15px;">
+	<div style="float:left">
+		<img alt="Logo" src="images/anz_champ_logo.png" style="height: 95px; "/>
 	</div>
-<div class="inputs" style="border:2px solid;border-style:solid;border-radius:15px;">
+	<div class="title" style="border-width:1px;border-style:thin;border-radius:15px;height: 91px;float:left; width: 80%;position: relative; top: 10px; left: 259px;">
+		<h4 style="font-size: 300%; margin-top: 0px;">ANZ Netball Championship Visualiser</h4>
+	</div>
+	<!--<div class="inputs" style="border:2px solid;border-style:solid;border-radius:15px;"> -->
 
-    <!--  <div class="image" id="image" style="border-width:1px;border-style:solid;border-radius:15px;with:20px;height: 91px; width: 239px;position: relative; top: 0px; right:-4px;">
-	</div> -->
-
-
-		<div class = "graphArea">
+	<!--  <div class="image" id="image" style="border-width:1px;border-style:solid;border-radius:15px;with:20px;height: 91px; width: 239px;position: relative; top: 0px; right:-4px;">	</div> -->
+	<div class = "graphArea">
 		<div class = "info" style = "float: right; border: 2px; border-style: solid; border-radius: 15px; width: 16%; height: 600px; right:-4px;">
-				<p style = "text-align: center; font-weight: bold; text-decoration: underline;"> FILTER OPTIONS </p><br>
-				<div style = "position: relative; top: 0px; right: 4px;">
-				  <div class = "filterBorder" style = "position:relative;top:0px;float: right; border: 2px; border-style: solid; border-radius: 15px;width:95%;height:100px;">
+			<p style = "text-align: center; font-weight: bold; text-decoration: underline;"> FILTER OPTIONS </p><br>
+			<div style = "position: relative; top: 0px; right: 4px;">
+				<div class = "filterBorder" style = "position:relative;top:0px;float: right; border: 2px; border-style: solid; border-radius: 15px;width:95%;height:100px;">
 					<div class="filterBy" style = "position: relative; top: 5px; left: 5px;">
-					<div style = "position: relative; top: 5px; left: 5px;">
-						<select id="yearFilter"></select>
+						<div style = "position: relative; top: 5px; left: 5px;">
+							<select id="yearFilter"></select>
+						</div>
+						<div style = "position: relative; top: -20px; left: 100px;">
+							<select>
+							  <option value="AllSeasons">All</option>
+							  <option value="finalSeason">Final</option>
+							  <option value="regularSeason">Regular</option>
+							</select>
+						</div>
 					</div>
-					<div style = "position: relative; top: -20px; left: 100px;">
-						<select>
-						  <option value="AllSeasons">All</option>
-						  <option value="finalSeason">Final</option>
-						  <option value="regularSeason">Regular</option>
+
+				</div>
+				<div class = "filterByTeam" style = "position:relative;top:2px;float: right; border: 2px; border-style: solid; border-radius: 15px;width:95%;height:100px;">
+					<div class="filterTeam" style = "position: relative; top: 5px; left: 5px;">
+						<select id="teamA" onchange="checkTeam(this)">
+						 <option value="NZTeam">New Zealand Team</option>
+						  <option value="CentralPulse">Central Pulse</option>
+						  <option value="NorthernMystics">Northern Mystics</option>
+						  <option value="WaikatobayofPlentyMagic">Waikato Bay of Plenty Magic</option>
+						  <option value="Southern Steel">Southern Steel</option>
+						  <option value="CanterburyTactix">Canterbury Tactix</option>
+
+						   <option value="AussieTeam">Australia Team</option>
+						  <option value="NewSouthWhalesSwifts">New South Whales Swifts</option>
+						  <option value="AdelaideThunderBirds">Adelaide Thunder Birds</option>
+						  <option value="MelbourneVixens">Melbourne Vixens</option>
+						  <option value="WestCoastFever">West Coast Fever</option>
+						  <option value="QueenslandFirebirds">Queensland Firebirds</option>
+
+						</select>
+						<br>
+						<label style = "text-align: center;">versus</label>
+						<br>
+						<select id="teamB">
+						  <option value="AussieTeam">Australia Team</option>
+						  <option value="NewSouthWhalesSwifts">New South Whales Swifts</option>
+						  <option value="AdelaideThunderBirds">Adelaide Thunder Birds</option>
+						  <option value="MelbourneVixens">Melbourne Vixens</option>
+						  <option value="WestCoastFever">West Coast Fever</option>
+						  <option value="QueenslandFirebirds">Queensland Firebirds</option>
+
+						  <option value="NZTeam">New Zealand Team</option>
+						  <option value="CentralPulse">Central Pulse</option>
+						  <option value="NorthernMystics">Northern Mystics</option>
+						  <option value="WaikatobayofPlentyMagic">Waikato Bay of Plenty Magic</option>
+						  <option value="Southern Steel">Southern Steel</option>
+						  <option value="CanterburyTactix">Canterbury Tactix</option>
 						</select>
 					</div>
-					</div>
-
-					</div>
-					<div class = "filterByTeam" style = "position:relative;top:2px;float: right; border: 2px; border-style: solid; border-radius: 15px;width:95%;height:100px;">
-					<div class="filterTeam" style = "position: relative; top: 5px; left: 5px;">
-					<select id="teamA" onchange="checkTeam(this)">
-					 <option value="NZTeam">New Zealand Team</option>
-					  <option value="CentralPulse">Central Pulse</option>
-					  <option value="NorthernMystics">Northern Mystics</option>
-					  <option value="WaikatobayofPlentyMagic">Waikato Bay of Plenty Magic</option>
-					  <option value="Southern Steel">Southern Steel</option>
-					  <option value="CanterburyTactix">Canterbury Tactix</option>
-
-					   <option value="AussieTeam">Australia Team</option>
-					  <option value="NewSouthWhalesSwifts">New South Whales Swifts</option>
-					  <option value="AdelaideThunderBirds">Adelaide Thunder Birds</option>
-					  <option value="MelbourneVixens">Melbourne Vixens</option>
-					  <option value="WestCoastFever">West Coast Fever</option>
-					  <option value="QueenslandFirebirds">Queensland Firebirds</option>
-
-					</select>
-					<br>
-					<label style = "text-align: center;">versus</label>
-					<br>
-					<select id="teamB">
-					  <option value="AussieTeam">Australia Team</option>
-					  <option value="NewSouthWhalesSwifts">New South Whales Swifts</option>
-					  <option value="AdelaideThunderBirds">Adelaide Thunder Birds</option>
-					  <option value="MelbourneVixens">Melbourne Vixens</option>
-					  <option value="WestCoastFever">West Coast Fever</option>
-					  <option value="QueenslandFirebirds">Queensland Firebirds</option>
-
-					  <option value="NZTeam">New Zealand Team</option>
-					  <option value="CentralPulse">Central Pulse</option>
-					  <option value="NorthernMystics">Northern Mystics</option>
-					  <option value="WaikatobayofPlentyMagic">Waikato Bay of Plenty Magic</option>
-					  <option value="Southern Steel">Southern Steel</option>
-					  <option value="CanterburyTactix">Canterbury Tactix</option>
-					</select>
-					</select>
-					</div>
-
-					</div>
-					<div class = "Teams" style = "position:relative;top:4px;float: right; border: 2px; border-style: solid; border-radius: 15px;width:95%;height:100px;">
-					  <div class="Teamfilter" style = "position: relative; top: 5px; left: 5px;">
-					  </div>
-					</div>
+				</div>
+				
+				<div class = "Teams" style = "position:relative;top:4px;float: right; border: 2px; border-style: solid; border-radius: 15px;width:95%;height:100px;">
+				  <div class="Teamfilter" style = "position: relative; top: 5px; left: 5px;"></div>
 				</div>
 			</div>
-
-			<div id = "canvas" class = "svg" style = "float: right; width: 70%; height: 600px; border: 2px; border-style: solid; border-radius: 15px;">
-
-				<div id="tabs" >
-				  <ul>
-				    <li><a href="#Overview">Overview</a></li>
-				    <li><a href="#visualization-1">Season Placement</a></li>
-				    <li><a href="#visualization-2">Home VS Away</a></li>
-				    <li><a href="#Rivalry">Rivalry</a></li>
-				  </ul>
-				  <div id="Overview">
-				    <p>Overview of All games </p>
-				    <svg id="visual_holder1"; style="width:100%; height:440px;border-style: thin; border-radius: 15px;"></svg>
-				  </div>
-				  <div id="visualization-1">
-				    <p>Visualization 1 goes here. Season Placement. </p>
-				    <svg id="visual_holder1"; style="width:100%; height:440px;border-style: thin; border-radius: 15px;"></svg>
-				  </div>
-				  <div id="visualization-2">
-				    <p>Visualization 2 goes here. Home VS Away games.  </p>
-				    <svg id="visual_holder2" width = "100%" height = "440px"></svg>
-				  </div>
-				  <div id="Rivalry" class="rivalry">
-
-				  </div>
-				</div>
-			</div>
-			<div class = "information" style = "float: left; border: 2px; border-style: solid; border-radius: 15px; width: 13%; height: 600px; ">
-				<p style = "text-align: center; font-weight: bold; text-decoration: underline;"> MATCH DETAILS </p><br>
-				<div style = "position: relative; top: 5px; left: 5px;">
-					<div class = "text"><p id = "Round"><u>Round:</u></p></div>
-					<div class = "text"><p id = "Date"><u>Date:</u></p></div>
-					<div class = "text"><p id = "Home"><u>Home Team:</u></p></div>
-					<div class = "text"><p id = "Away"><u>Away Team:</u></p></div>
-					<div class = "text"><p id = "Score"><u>Score:</u></p></div>
-					<div class = "text"><p id = "Venue"><u>Venue:</u></p></div>
-				</div>
-				<div id="map-canvas" style="float:bottom;border-width:1px;border-style:solid;border-radius:15px;with:15px;height:220px">
-					<div style = "position: relative; top: 2px; left: 2px;">
-					 <!-- <button onclick="initialize()">Click me</button>  -->
-				</div>
-				</div>
-			</div>
-			<br style="clear:left;" />
-			<br style="clear: left;" />
-		</div>
-		<div class = "filters" style = "border: 2px solid; border-style: solid; border-radius: 15px;">
 		</div>
 
-</div>
-</div>
-<script type="text/javascript">
+		<div id = "canvas" class = "svg" style = "float: right; width: 70%; height: 600px; border: 2px; border-style: solid; border-radius: 15px;">
+
+			<div id="tabs" >
+			  <ul>
+				<li><a href="#Overview">Overview</a></li>
+				<li><a href="#visualization-1">Season Placement</a></li>
+				<li><a href="#visualization-2">Home VS Away</a></li>
+				<li><a href="#Rivalry">Rivalry</a></li>
+			  </ul>
+			  <div id="Overview">
+				<p>Overview of All games </p>
+				<svg id="visual_holder1"; style="width:100%; height:440px;border-style: thin; border-radius: 15px;"></svg>
+			  </div>
+			  <div id="visualization-1">
+				<p>Visualization 1 goes here. Season Placement. </p>
+				<svg id="visual_holder1"; style="width:100%; height:440px;border-style: thin; border-radius: 15px;"></svg>
+			  </div>
+			  <div id="visualization-2">
+				<p>Visualization 2 goes here. Home VS Away games.  </p>
+				<svg id="visual_holder2" width = "100%" height = "440px"></svg>
+			  </div>
+			  <div id="Rivalry" class="rivalry">
+
+			  </div>
+			</div>
+		</div>
+		<div class = "information" style = "float: left; border: 2px; border-style: solid; border-radius: 15px; width: 13%; height: 600px; ">
+			<p style = "text-align: center; font-weight: bold; text-decoration: underline;"> MATCH DETAILS </p><br>
+			<div style = "position: relative; top: 5px; left: 5px;">
+				<div class = "text"><p id="round">Round:</p></div>
+				<div class = "text"><p id="date">Date:</p></div>
+				<div class = "text"><p id="homeTeam">Home Team:</p></div>
+				<div class = "text"><p id="awayTeam">Away Team:</p></div>
+				<div class = "text"><p id="score">Score:</p></div>
+				<div class = "text"><p id="venue">Venue:</p></div>
+			</div>
+			<div id="map-canvas" style="float:bottom;border-width:1px;border-style:solid;border-radius:15px;with:15px;height:220px">
+				<div style = "position: relative; top: 2px; left: 2px;">
+				 <!-- <button onclick="initialize()">Click me</button>  -->
+				</div>
+			</div>
+		</div>
+	</div>
+		<!-- <div class = "filters" style = "border: 2px solid; border-style: solid; border-radius: 15px;"> No content here.	</div> -->
+
+	</div>
+	<script type="text/javascript">
 	  <!-- Function to load team names into array-->
 		var x=document.getElementById("teamB");
 	  function checkTeam(select){
 		  var selectedOption = select.options[select.selectedIndex];
-          //alert ("The selected option is " + selectedOption.text);
+		  //alert ("The selected option is " + selectedOption.text);
 		//var nz=document.getElementById("teamA");
 		//var t_name=x.options[0].text;
 		var s=selectedOption.text;
@@ -187,6 +178,6 @@
 			//}
 		}
 	  }
-  </script>
+	</script>
 </body>
 </html>
