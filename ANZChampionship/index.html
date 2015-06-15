@@ -45,13 +45,13 @@
   </script>
 
 </head>
-<body>
+<body onload="LoadYearToFilterBox()">
 <div class="outer" style="border: 2px solid;border-style:solid;border-radius:15px;">
      <div style="float:left">
 					 <img alt="Logo" src="images/anz_champ_logo.png" style="height: 95px; "/>
 		</div>
 	 <div class="title" style="border-width:1px;border-style:thin;border-radius:15px;height: 91px;float:left; width: 80%;position: relative; top: 10px; left: 259px;">
-		<p align="center"><h4><p align="center" font-size="300px"><font size=100>Welcome to ANZ Visualiser</font></p></h4></p>
+		<p align="center"><h4><p align="center"><font size="10%">ANZ Netball Championship Visualiser</font></p></h4></p>
 	</div>
 <div class="inputs" style="border:2px solid;border-style:solid;border-radius:15px;">
 
@@ -65,22 +65,18 @@
 				<div style = "position: relative; top: 0px; right: 4px;">
 				  <div class = "filterBorder" style = "position:relative;top:0px;float: right; border: 2px; border-style: solid; border-radius: 15px;width:95%;height:100px;">
 					<div class="filterBy" style = "position: relative; top: 5px; left: 5px;">
-					<select>
-					  <option value="Season">Season</option>
-					  <option value="Venue">Venue</option>
-					  <option value="PointDifference">Point Difference</option>
-					  <option value="Round">Round</option>
-					</select>
-					<br>
-					<br>
-					<input type="checkbox" name="early" value="early">Early
-					<input type="checkbox" name="mid" value="mid">Mid
-					<input type="checkbox" name="late" value="late">Late<br>
-					<input type="checkbox" name="PlayOffs" value="playOffs">Play Offs
-					<input type="checkbox" name="finals" value="finals">Finals
-					<input type="checkbox" name="all" value="all">All<br>
-
+					<div style = "position: relative; top: 5px; left: 5px;">
+						<select id="yearFilter"></select>
 					</div>
+					<div style = "position: relative; top: -20px; left: 100px;">
+						<select>
+						  <option value="AllSeasons">All</option>
+						  <option value="finalSeason">Final</option>
+						  <option value="regularSeason">Regular</option>
+						</select>
+					</div>
+					</div>
+
 					</div>
 					<div class = "filterByTeam" style = "position:relative;top:2px;float: right; border: 2px; border-style: solid; border-radius: 15px;width:95%;height:100px;">
 					<div class="filterTeam" style = "position: relative; top: 5px; left: 5px;">
@@ -133,10 +129,15 @@
 
 				<div id="tabs" >
 				  <ul>
+				    <li><a href="#Overview">Overview</a></li>
 				    <li><a href="#visualization-1">Season Placement</a></li>
 				    <li><a href="#visualization-2">Home VS Away</a></li>
-				    <li><a href="#visualization-3">Visualization 3 - Rounds</a></li>
+				    <li><a href="#Rivalry">Rivalry</a></li>
 				  </ul>
+				  <div id="Overview">
+				    <p>Overview of All games </p>
+				    <svg id="visual_holder1"; style="width:100%; height:440px;border-style: thin; border-radius: 15px;"></svg>
+				  </div>
 				  <div id="visualization-1">
 				    <p>Visualization 1 goes here. Season Placement. </p>
 				    <svg id="visual_holder1"; style="width:100%; height:440px;border-style: thin; border-radius: 15px;"></svg>
@@ -145,9 +146,8 @@
 				    <p>Visualization 2 goes here. Home VS Away games.  </p>
 				    <svg id="visual_holder2" width = "100%" height = "440px"></svg>
 				  </div>
-				  <div id="visualization-3">
-				    <p>Visualization 3 goes here. Round by round.  </p>
-				    <svg id="visual_holder3" width = "100%" height = "440px"></svg>
+				  <div id="Rivalry" class="rivalry">
+
 				  </div>
 				</div>
 			</div>
