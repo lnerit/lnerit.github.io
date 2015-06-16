@@ -232,7 +232,7 @@ d3.csv('data/2008-Table1.csv', function(data){
 							console.log(allTeams);
 							console.log(allVenues);
 
-							var div = d3.select('.rivalry').append('div');
+							var div = d3.select('Rivalry').append('div');
 
 							var select = div.append('select').attr('id', 'canvas').attr('class', 'dropdown');
 							select.node().addEventListener('change', function(e) {showYear = this.value;});

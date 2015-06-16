@@ -1,8 +1,15 @@
-/*text{font-size:36px;}*/
 
-body
-{
-background-repeat:no-repeat;
+.borderSection {
+  display: inline-block;
+  border: 2px; 
+  border-style: solid; 
+  border-radius: 15px;
+  vertical-align: top;
+}
+
+.title {
+  margin-top: 5px;
+  vertical-align: top;
 }
 
 #chart rect {
