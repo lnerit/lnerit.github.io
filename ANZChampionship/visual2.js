@@ -1,3 +1,9 @@
+/*	Michael Riley (30062428). SWEN303 2015 T1. 
+ *  Visualization and connections to the rest of the project. 
+ *  Template for other visualizations. 
+ *  Uses d3 library's force directed layout to position elements representing games. 
+ */
+
 "use strict";
 function makeVisualizationTwo(theData, svg){
 	//Sanity Check.... got data.. got d3?
@@ -5,7 +11,7 @@ function makeVisualizationTwo(theData, svg){
 		alert("No data or svg in makeVisualizationTwo."+ svg + theData);
 		return "No data or svg in makeVisualizationTwo.";
 	}
-	if(d3 == undefined){
+	if(d3 == undefined){		//d3 available. notify and get out if its not available. 
 		alert("No d3 object.");
 		return "No d3 object.";
 	}
@@ -15,44 +21,90 @@ function makeVisualizationTwo(theData, svg){
 	var visualizationHeight = 435;
 	var visualizationWidth = 590;
 	
-	var gameSet = theData["Northern Mystics"];
+	//overwrite value from above. 
+	focusTeam = "Southern Steel";
+	var gameSet = theData[focusTeam];
+	var indexOfWin;  	//these two are storage to determine what the locus of the force directed layout will be. 
+	var indexOfLoss;
 	
-	//adjust
-	gameSet.forEach(function(game){
-		//positive points difference means hometeam won. 
-		game.pointsDifference = game.Score.split("–")[0] - game.Score.split("–")[1];
-	}
+	//make each game object have a isHomeGame and pointsDifference field. 
+	gameSet.forEach(function(game, i){
+		//positive points difference means focusTeam won. 
+		if(game["Home Team"] == focusTeam){//its a home game.
+			game.isHomeGame = true;
+			game.pointsDifference = game.Score.split("–")[0] - game.Score.split("–")[1];
+		} else { //its an away game. 
+			game.isHomeGame = false;
+			game.pointsDifference = game.Score.split("–")[1] - game.Score.split("–")[0];
+		}
+		if(game.pointsDifference > 0){
+			indexOfWin = i;
+		} else {
+			indexOfLoss = i;
+		}
+	});
+	
+	//loop over gameSet once more building links array. select two games to be the loci. and then create links to them.
+	var links = [];
+	gameSet.forEach(function(game, i){
+		if(game.pointsDifference > 0){
+			links.push({source: i, target: indexOfWin});
+		} else {
+			links.push({source: i, target: indexOfLoss});
+		}
+	});
+	
 	//cast to a d3 type object.
 	var svgElem = d3.select(svg)
 		.attr("width",visualizationWidth)
 		.attr("height",visualizationHeight);	 
-	
+
+	//force directed layout //link: https://github.com/mbostock/d3/wiki/Force-Layout
 	var force = d3.layout.force()
-    .charge(2)
-    .size([visualizationWidth, visualizationHeight])
-	.linkDistance(41)
-	.nodes(gameSet)
+		.charge(-89)
+		.size([visualizationWidth, visualizationHeight])
+		.links(links)
+		.linkDistance(5)
+		.nodes(gameSet)
+		.gravity(0.104)
+		.start();
 	
-	.start();
+	//set of circles ... 
+	var circles = svgElem.selectAll("circle")
+		.data(gameSet)
+		.enter()
+		.append("circle");
 	
-	force.on('end', function() {
+	//set of labels. 
+	var labels = svgElem.selectAll("text")
+		.data([{lbl: "WinnnaZ!"},
+			   {lbl: "LoserZ!"}])
+		.enter()
+		.append("text")
+		.text(function(data) {return data.lbl;});
 	
-		//each game. 
-		svgElem.selectAll("circle")
-			.data(gameSet)
-			.enter()
-			.append("circle")
-			//random x and y for the start of the force directed layout. 
-			.attr("cx", function(d) {return d.x})
+	//for each tick of the force directed layouts simulation... gives the jumpy effect. 
+	force.on("tick", function() {
+		//random x and y for the start of the force directed layout. 
+		circles.attr("cx", function(d) {return d.x})
 			.attr("cy", function(d) {return d.y})
-			.attr("r",5)
+			.attr("r",8)
 			.attr("fill", function(game,i){
-					var homeScore = ;
-					var awayScore = game.Score.split("–")[1];
-					var ratio = homeScore/awayScore;
-					//alert("rgb("+homeScore*2+",50,"+awayScore+");");
-					return ("rgb(20,"+ratio*255+","+255+")");
-				});
+					return ("rgb("+(140 - (11*game.pointsDifference))+","+(140 +(11*game.pointsDifference))+","+30+")");
+			});
+			
+		//update labels depending on their content. as the focui of the two clusters move. 
+		labels.attr("x", function(data){ 
+			//Half widths for(to center labels )halfWinnerLabelWidth = 42 halfLoserLabelWidth = 31;
+			if(data.lbl=="WinnnaZ!"){ return gameSet[indexOfWin].x-42; }
+			else { return gameSet[indexOfLoss].x-31; }
+		})
+		.attr("y", function(data){ 
+			if(data.lbl=="WinnnaZ!"){ return gameSet[indexOfWin].y-68; }
+			else { return gameSet[indexOfLoss].y-68; }
+		});
+		
+		
 		
 	});
 	
