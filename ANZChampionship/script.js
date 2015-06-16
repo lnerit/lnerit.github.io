@@ -19,9 +19,8 @@ var showFinal = 'Both';
 function LoadYearToFilterBox(){
 	var select = document.getElementById("yearFilter");
 	for (var i=0;i<listYears.length;i++){
-		var opt=listYears[i];
 		var ele=document.createElement("option");
-		ele.textContent=opt;
+		ele.textContent=listYears[i];
 		select.appendChild(ele);
 	}
 }
@@ -231,6 +230,9 @@ d3.csv('data/2008-Table1.csv', function(data){
 							console.log(allSeasons);
 							console.log(allTeams);
 							console.log(allVenues);
+							
+							//call Next functions.. to draw visualization 2.
+							makeVisualizationTwo(allTeams, document.getElementById("visual_holder_overview"));
 
 							var div = d3.select('Rivalry').append('div');
 
@@ -251,15 +253,11 @@ d3.csv('data/2008-Table1.csv', function(data){
 							.enter().append('option')
 							.attr('value', function(d) {return d;})
 							.text(function(d) {return d;});
-
+							
 						});
-
 					});
-
 			});
-
 		});
-
 	});
 });
 
