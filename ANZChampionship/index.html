@@ -22,7 +22,16 @@
 	$( document ).ready(function() {
 		$( "#tabs" ).tabs();		//make the tabbed content into tabs. 
 		LoadYearToFilterBox();		// load years into filter box. 
+		
+		
+		
 	});
+	
+	function dataIsREady(){
+		//call Next functions.. to draw visualization 2.
+		makeVisualizationTwo(allTeams, document.getElementById("visual_holder_overview"));
+	}
+	
 
   </script>
   
@@ -118,8 +127,8 @@
 						<div class="filterTeam" style = "position: relative; top: 5px; left: 5px;">
 							Teams <br>
 							<select id="teamA" onchange="checkTeam(this)">
-							  <option value="NZTeam">New Zealand Team</option>
-							  <option value="CentralPulse">Central Pulse</option>
+							  <option value="NZTeam">New Zealand Teams</option>
+							  <option value="CentralPulse" selected="selected">Central Pulse</option>
 							  <option value="NorthernMystics">Northern Mystics</option>
 							  <option value="WaikatobayofPlentyMagic">Waikato Bay of Plenty Magic</option>
 							  <option value="Southern Steel">Southern Steel</option>
@@ -137,7 +146,7 @@
 							<br>
 							<select id="teamB">
 							  <option value="AussieTeam">Australia Team</option>
-							  <option value="NewSouthWhalesSwifts">New South Whales Swifts</option>
+							  <option value="NewSouthWhalesSwifts" selected="selected" >New South Whales Swifts</option>
 							  <option value="AdelaideThunderBirds">Adelaide Thunder Birds</option>
 							  <option value="MelbourneVixens">Melbourne Vixens</option>
 							  <option value="WestCoastFever">West Coast Fever</option>
