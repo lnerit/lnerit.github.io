@@ -12,8 +12,11 @@ var allSeasons = {};
 var allTeams = {};
 var allVenues = {};
 
+//Initialise varables
+var sYear = 2008;
+var sTeam = 'Central Pulse';
 var showYear = 'All';
-var showFinal = 'Both';
+
 
 //function to load Season for yearFilter on the HTML page
 function LoadYearToFilterBox(){
@@ -230,36 +233,100 @@ d3.csv('data/2008-Table1.csv', function(data){
 							console.log(allSeasons);
 							console.log(allTeams);
 							console.log(allVenues);
-							
+
 							//call Next functions.. to draw visualization 2.
 							makeVisualizationTwo(allTeams, document.getElementById("visual_holder_overview"));
-
-							var div = d3.select('Rivalry').append('div');
-
-							var select = div.append('select').attr('id', 'canvas').attr('class', 'dropdown');
-							select.node().addEventListener('change', function(e) {showYear = this.value;});
-
-							select.selectAll('option')
-							.data(['All'].concat(listYears))
-							.enter().append('option')
-							.attr('value', function(d) {return d;})
-							.text(function(d) {return d;});
-
-							select = div.append('select').attr('id', 'visual_holder3').attr('class', 'dropdown');
-
-							select.node().addEventListener('change', function(e) {showFinal = this.value;});
-							select.selectAll('option')
-							.data(['All', 'Regular', 'Finals'])
-							.enter().append('option')
-							.attr('value', function(d) {return d;})
-							.text(function(d) {return d;});
-							
+							RoundPlacement(allSeasons,document.getElementById("visualization-1"));
 						});
 					});
 			});
 		});
 	});
 });
+function teamRank(dat){
+	// calculate wins-losses, draws, proportion win, and league points
+	var data = [];
+	for (var i = 0; i < teamList.length; i++) {
+		data.push(new TeamData(teamList[i]));
+	}
+	dat.forEach(function(e) {
+		if (e.Date.indexOf('BYES') === 0) return;
+
+		var scoreHome = parseInt(e.Score.split('–')[0], 10);
+		var scoreAway = parseInt(e.Score.split('–')[1], 10);
+
+		data[teamList.indexOf(e['Home Team'])].gamePoints += scoreHome;
+		data[teamList.indexOf(e['Home Team'])].awayGamePoints += scoreAway;
+		data[teamList.indexOf(e['Away Team'])].gamePoints += scoreAway;
+		data[teamList.indexOf(e['Away Team'])].awayGamePoints += scoreHome;
+
+		if (scoreHome > scoreAway) {
+			data[teamList.indexOf(e['Home Team'])].wins++;
+			data[teamList.indexOf(e['Home Team'])].points += 2;
+			data[teamList.indexOf(e['Away Team'])].losses++;
+
+			data[teamList.indexOf(e['Home Team'])].homeWin++;
+			data[teamList.indexOf(e['Away Team'])].awayLoss++;
+		} else if (scoreHome < scoreAway) {
+			data[teamList.indexOf(e['Away Team'])].wins++;
+			data[teamList.indexOf(e['Away Team'])].points += 2;
+			data[teamList.indexOf(e['Home Team'])].losses++;
+
+			data[teamList.indexOf(e['Away Team'])].awayWin++;
+			data[teamList.indexOf(e['Home Team'])].homeLoss++;
+		} else {
+			console.log(teamList.indexOf(e['Home Team'])  + " " + teamList.indexOf(e['Away Team']));
+			data[teamList.indexOf(e['Home Team'])].draws++;
+			data[teamList.indexOf(e['Home Team'])].points++;
+			data[teamList.indexOf(e['Away Team'])].draws++;
+			data[teamList.indexOf(e['Away Team'])].points++;
+		}
+	});
+
+	return data;
+	}
+
+function rank(year) {
+	var list = allSeasons[year];
+	var e = list[list.length-1];
+	var scoreDiff = [];
+	// Take the score difference for finals
+	var scoreHome = parseInt(e.Score.split('–')[0], 10);
+	var scoreAway = parseInt(e.Score.split('–')[1], 10);
+	if (scoreHome > scoreAway) {
+		// home win
+		scoreDiff.push(e['Home Team']);
+		scoreDiff.push(e['Away Team']);
+	} else {
+		// away win
+		scoreDiff.push(e['Away Team']);
+		scoreDiff.push(e['Home Team']);
+	}
+	//third
+	e = list[list.length-2];
+	//console.log(e);
+	var scoreHome = parseInt(e.Score.split('–')[0], 10);
+	var scoreAway = parseInt(e.Score.split('–')[1], 10);
+	if (scoreHome > scoreAway) {
+		// home won
+		scoreDiff.push(e['Away Team']);
+	} else {
+		// away win
+		scoreDiff.push(e['Home Team']);
+	}
+	e = list[list.length-3];
+
+	var scoreHome = parseInt(e.Score.split('–')[0], 10);
+	var scoreAway = parseInt(e.Score.split('–')[1], 10);
+	if (scoreHome > scoreAway) {
+		// home wins
+		scoreDiff.push(e['Away Team']);
+	} else {
+		// away wins
+		scoreDiff.push(e['Home Team']);
+	}
+	return scoreDiff;
+}
 
 
 
