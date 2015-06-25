@@ -24,8 +24,8 @@ function makeVisualizationTwo(theData, svg){
 	//overwrite value from above.
 	focusTeam = "Southern Steel";
 	var gameSet = theData[focusTeam];
-	var indexOfWin;  	//these two are storage to determine what the locus of the force directed layout will be.
-	var indexOfLoss;
+	var indexOfHomeGame;  	//these two are storage to determine what the locus of the force directed layout will be.
+	var indexOfAwayGame;
 
 	//make each game object have a isHomeGame and pointsDifference field.
 	gameSet.forEach(function(game, i){
@@ -37,20 +37,20 @@ function makeVisualizationTwo(theData, svg){
 			game.isHomeGame = false;
 			game.pointsDifference = game.Score.split("–")[1] - game.Score.split("–")[0];
 		}
-		if(game.pointsDifference > 0){
-			indexOfWin = i;
+		if(game.isHomeGame){
+			indexOfHomeGame = i;
 		} else {
-			indexOfLoss = i;
+			indexOfAwayGame = i;
 		}
 	});
 
-	//loop over gameSet once more building links array. select two games to be the loci. and then create links to them.
+	//loop over gameSet once more building links array. select two games(1 away and 1 home) to be the loci. and then create links to them.
 	var links = [];
 	gameSet.forEach(function(game, i){
-		if(game.pointsDifference > 0){
-			links.push({source: i, target: indexOfWin});
+		if(game.isHomeGame){
+			links.push({source: i, target: indexOfHomeGame});
 		} else {
-			links.push({source: i, target: indexOfLoss});
+			links.push({source: i, target: indexOfAwayGame});
 		}
 	});
 
@@ -66,7 +66,7 @@ function makeVisualizationTwo(theData, svg){
 		.links(links)
 		.linkDistance(5)
 		.nodes(gameSet)
-		.gravity(0.104)
+		.gravity(0.094)
 		.start();
 
 	//set of circles ...
@@ -77,8 +77,8 @@ function makeVisualizationTwo(theData, svg){
 
 	//set of labels.
 	var labels = svgElem.selectAll("text")
-		.data([{lbl: "WinnnaZ!"},
-			   {lbl: "LoserZ!"}])
+		.data([{lbl: "Home!"},
+			   {lbl: "Away!"}])
 		.enter()
 		.append("text")
 		.text(function(data) {return data.lbl;});
@@ -96,12 +96,12 @@ function makeVisualizationTwo(theData, svg){
 		//update labels depending on their content. as the focui of the two clusters move.
 		labels.attr("x", function(data){
 			//Half widths for(to center labels )halfWinnerLabelWidth = 42 halfLoserLabelWidth = 31;
-			if(data.lbl=="WinnnaZ!"){ return gameSet[indexOfWin].x-42; }
-			else { return gameSet[indexOfLoss].x-31; }
+			if(data.lbl=="Home!"){ return gameSet[indexOfHomeGame].x-42; }
+			else { return gameSet[indexOfAwayGame].x-31; }
 		})
 		.attr("y", function(data){
-			if(data.lbl=="WinnnaZ!"){ return gameSet[indexOfWin].y-68; }
-			else { return gameSet[indexOfLoss].y-68; }
+			if(data.lbl=="Away!"){ return gameSet[indexOfHomeGame].y-68; }
+			else { return gameSet[indexOfAwayGame].y-68; }
 		});
 
 
