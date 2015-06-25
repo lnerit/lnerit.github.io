@@ -5,8 +5,12 @@
  */
 
 "use strict";
-var colorScale;
-var greatestPointsDifference=50;
+/* On mouseover for each circle. */
+function mouseOverCircle(gameRepresentedByCircle){
+   console.log("You mousedOver my game" + JSON.stringify(gameRepresentedByCircle)); 
+}
+
+
 
 function makeVisualizationTwo(theData, svg){
 	//Sanity Check.... got data.. got d3?
@@ -31,7 +35,7 @@ function makeVisualizationTwo(theData, svg){
 	var indexes = {home : {win: 0, loss:0},
 		       away : {win: 0, loss:0}
 		      }
-	 greatestPointsDifference=0;
+	var greatestPointsDifference=0;
 
 	//make each game object have a isHomeGame and pointsDifference field.
 	gameSet.forEach(function(game, i){
@@ -82,16 +86,16 @@ function makeVisualizationTwo(theData, svg){
 		.charge(-129)
 		.size([visualizationWidth, visualizationHeight])
 		.links(links)
-		.linkDistance(0.8)
+		.linkDistance(12)
 		.nodes(gameSet)
-		.gravity(0.14)
+		.gravity(0.34)
 		.start();
 
 	//setup color scaler
-	colorScale = d3.scale.linear()
+	var colorScale = d3.scale.linear()
 		    .domain([-greatestPointsDifference, 0, greatestPointsDifference])
 		    .interpolate(d3.interpolateRgb)
-		    .range([d3.rgb(255,0,0),"grey", d3.rgb(0,255,0)]);
+		    .range([d3.rgb(255,0,0), "grey", d3.rgb(0,255,0)]);
 		
 	//set of circles ...
 	var circles = svgElem.selectAll("circle")
@@ -100,8 +104,7 @@ function makeVisualizationTwo(theData, svg){
 		.append("circle")
 		.attr("r",10)
 		.attr("fill", function(game,i){
-					var pD = game.pointsDifference;
-					return (colorScale(pD));
+					return (colorScale(game.pointsDifference));
 		})
 		.on('mouseover', function(d) {mouseOverCircle(d);});
 
@@ -132,10 +135,6 @@ function makeVisualizationTwo(theData, svg){
 	});
 } //end makeVisualizationTwo
 
-/* On mouseover for each circle. */
-function mouseOverCircle(gameRepresentedByCircle){
-   console.log("You mousedOver my game" + JSON.stringify(gameRepresentedByCircle)); 
-}
 
 
 
