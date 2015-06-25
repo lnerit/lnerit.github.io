@@ -101,7 +101,7 @@ function makeVisualizationTwo(theData, svg){
 			.attr("cy", function(d) {return d.y})
 			.attr("r",8)
 			.attr("fill", function(game,i){
-					return ("rgb("");
+					return ("rgb("+(140 - (11*game.pointsDifference))+","+(140 +(11*game.pointsDifference))+","+30+")");
 			});
 
 		//update labels depending on their content. as the focui of the two clusters move.
@@ -114,8 +114,6 @@ function makeVisualizationTwo(theData, svg){
 			if(data.lbl=="Home!"){ return gameSet[indexes.home.win].y-68; }
 			else { return gameSet[indexes.away.win].y-68; }
 		});
-
-
 
 	});
 
