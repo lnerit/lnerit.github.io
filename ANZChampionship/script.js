@@ -233,10 +233,10 @@ d3.csv('data/2008-Table1.csv', function(data){
 							console.log(allSeasons);
 							console.log(allTeams);
 							console.log(allVenues);
-
+							dataIsREady();
 							//call Next functions.. to draw visualization 2.
-							makeVisualizationTwo(allTeams, document.getElementById("visual_holder_overview"));
-							RoundPlacement(allSeasons,document.getElementById("visualization-1"));
+							//makeVisualizationTwo(allTeams, document.getElementById("visual_holder_overview"));
+							//RoundPlacement(allSeasons,document.getElementById("visualization-1"));
 						});
 					});
 			});
