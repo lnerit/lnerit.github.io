@@ -24,8 +24,10 @@ function makeVisualizationTwo(theData, svg){
 	//overwrite value from above.
 	focusTeam = "Southern Steel";
 	var gameSet = theData[focusTeam];
-	var indexOfHomeGame;  	//these two are storage to determine what the locus of the force directed layout will be.
-	var indexOfAwayGame;
+	//Storage for various indexes. These are used to tie the force directed layout together. 
+	var indexes = {home : {win: 0, loss:0},
+		       away : {win: 0, loss:0}
+		      }
 
 	//make each game object have a isHomeGame and pointsDifference field.
 	gameSet.forEach(function(game, i){
@@ -37,10 +39,13 @@ function makeVisualizationTwo(theData, svg){
 			game.isHomeGame = false;
 			game.pointsDifference = game.Score.split("–")[1] - game.Score.split("–")[0];
 		}
+		//store the index so that we can build FDLayout later. 
 		if(game.isHomeGame){
-			indexOfHomeGame = i;
+			if(game.pointsDifference > 0){indexes.home.win = i;}
+			else {indexes.home.loss = i;}
 		} else {
-			indexOfAwayGame = i;
+			if(game.pointsDifference > 0){indexes.away.win = i;}
+			else {indexes.away.loss = i;}
 		}
 	});
 
@@ -48,11 +53,17 @@ function makeVisualizationTwo(theData, svg){
 	var links = [];
 	gameSet.forEach(function(game, i){
 		if(game.isHomeGame){
-			links.push({source: i, target: indexOfHomeGame});
+			if(game.pointsDifference > 0){links.push({source: i, target: indexes.home.win});}
+			else {links.push({source: i, target: indexes.home.loss});}
 		} else {
-			links.push({source: i, target: indexOfAwayGame});
+			if(game.pointsDifference > 0){links.push({source: i, target: indexes.away.win});}
+			else {links.push({source: i, target: indexes.away.loss});}
 		}
 	});
+	//additionally we have to link the home games and the away games. 
+	links.push({source: indexes.home.win, target: indexes.home.loss});
+	links.push({source: indexes.away.win, target: indexes.away.loss});
+	
 
 	//cast to a d3 type object.
 	var svgElem = d3.select(svg)
@@ -61,12 +72,12 @@ function makeVisualizationTwo(theData, svg){
 
 	//force directed layout //link: https://github.com/mbostock/d3/wiki/Force-Layout
 	var force = d3.layout.force()
-		.charge(-89)
+		.charge(-119)
 		.size([visualizationWidth, visualizationHeight])
 		.links(links)
-		.linkDistance(5)
+		.linkDistance(0.7)
 		.nodes(gameSet)
-		.gravity(0.094)
+		.gravity(0.14)
 		.start();
 
 	//set of circles ...
@@ -90,18 +101,18 @@ function makeVisualizationTwo(theData, svg){
 			.attr("cy", function(d) {return d.y})
 			.attr("r",8)
 			.attr("fill", function(game,i){
-					return ("rgb("+(140 - (11*game.pointsDifference))+","+(140 +(11*game.pointsDifference))+","+30+")");
+					return ("rgb("");
 			});
 
 		//update labels depending on their content. as the focui of the two clusters move.
 		labels.attr("x", function(data){
 			//Half widths for(to center labels )halfWinnerLabelWidth = 42 halfLoserLabelWidth = 31;
-			if(data.lbl=="Home!"){ return gameSet[indexOfHomeGame].x-42; }
-			else { return gameSet[indexOfAwayGame].x-31; }
+			if(data.lbl=="Home!"){ return gameSet[indexes.home.win].x-42; }
+			else { return gameSet[indexes.away.win].x-31; }
 		})
 		.attr("y", function(data){
-			if(data.lbl=="Away!"){ return gameSet[indexOfHomeGame].y-68; }
-			else { return gameSet[indexOfAwayGame].y-68; }
+			if(data.lbl=="Home!"){ return gameSet[indexes.home.win].y-68; }
+			else { return gameSet[indexes.away.win].y-68; }
 		});
 
 
