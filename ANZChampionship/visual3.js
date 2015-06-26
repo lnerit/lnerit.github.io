@@ -84,7 +84,7 @@ graph.append("svg:g").append("svg:g").attr('class', 'focus').append('svg:g')
 graph.append('rect').attr('x', x(1)).attr('y',0)
 .attr('width', 2.5*width/5.7).attr('height', height)
 .style('fill', 'yellow').style('opacity', '0.5')
-.attr("transform", "translate(" + x + "," + y + ")")
+//.attr("transform", "translate(" + x + "," + y + ")")  //this line causes chrome to error as the transform attribute cannot be applied to rect elements.
 .on('mouseover', function(e) {
 		var s = d3.select(this);
 		s.style('fill', 'grey');} )
@@ -100,7 +100,7 @@ graph.append('svg:g')
 graph.append('rect').attr('x', x(8)).attr('y',0)
 .attr('width', 2.5*width/7).attr('height', height)
 .style('fill', 'yellow').style('opacity', '0.5')
-.attr("transform", "translate(" + x + "," + y + ")")
+//.attr("transform", "translate(" + x + "," + y + ")")	//this line causes chrome to error as the transform attribute cannot be applied to rect elements.
 .on('mouseover', function(e) {
 		var s = d3.select(this);
 		s.style('fill', 'orange');} )

@@ -7,10 +7,25 @@
 "use strict";
 /* On mouseover for each circle. */
 function mouseOverCircle(gameRepresentedByCircle){
-   console.log("You mousedOver my game" + JSON.stringify(gameRepresentedByCircle)); 
+   console.log("You mousedOver my game" + JSON.stringify(gameRepresentedByCircle));
+   $('#info-01').html("Home: "+gameRepresentedByCircle['Home Team']);
+   $('#info-02').html("Away: "+gameRepresentedByCircle['Away Team']);
+   $('#info-03').html("Score: "+gameRepresentedByCircle['Score']);
+   $('#info-04').html("Venue: "+gameRepresentedByCircle['Venue']);
+   $('#info-05').html("");
+   $('#info-06').html("");
 }
 
+var configOptions = {
+	verticalOffsetLabel: -20,
+	gravity: 0.21,
+	linkDistance: 10,
+	circleRepelFactor: -140,
+	colours: [d3.rgb(255,0,0), d3.rgb(90,0,0),d3.rgb(0,90,0), d3.rgb(0,255,0)]
+};
 
+//global to debugge
+var gameSet;
 
 function makeVisualizationTwo(theData, svg){
 	//Sanity Check.... got data.. got d3?
@@ -25,18 +40,21 @@ function makeVisualizationTwo(theData, svg){
 
 	//Get focus team from teamSelector. teamA.
 	var focusTeam = document.getElementById("teamA").value;
-	var visualizationHeight = 435;
-	var visualizationWidth = 590;
+	var visualizationHeight = 445;
+	var visualizationWidth = 610;
 
 	//overwrite value from above.
 	focusTeam = "Southern Steel";
-	var gameSet = theData[focusTeam];
+	 gameSet = theData[focusTeam];
 	//Storage for various indexes. These are used to tie the force directed layout together. 
 	var indexes = {home : {win: 0, loss:0},
 		       away : {win: 0, loss:0}
-		      }
-	var greatestPointsDifference=0;
-
+		}
+	
+	// these are used to setup the color scaler.
+	var greatestPosPointsDifference = Number.POSITIVE_INFINITY;
+	var greatestNegPointsDifference = Number.NEGATIVE_INFINITY;
+	
 	//make each game object have a isHomeGame and pointsDifference field.
 	gameSet.forEach(function(game, i){
 		//positive points difference means focusTeam won.
@@ -47,9 +65,28 @@ function makeVisualizationTwo(theData, svg){
 			game.isHomeGame = false;
 			game.pointsDifference = game.Score.split("–")[1] - game.Score.split("–")[0];
 		}
-		//store greatest point Difference to give color scaler.
-		if(greatestPointsDifference < Math.abs(game.pointsDifference)){ greatestPointsDifference = Math.abs(game.pointsDifference);}
 		
+		//store greatest point Difference to give color scaler.
+		
+		greatestPosPointsDifference = function(){
+			var v = Number.NEGATIVE_INFINITY;
+			gameSet.forEach(function(game){
+				if(game.pointsDifference > v){
+					v = game.pointsDifference;
+				}
+			})
+			return v;
+		}();
+		greatestNegPointsDifference = function(){
+			var v = Number.POSITIVE_INFINITY;
+			gameSet.forEach(function(game){
+				if(game.pointsDifference < v){
+					v = game.pointsDifference;
+				}
+			})
+			return v;
+		}();
+				
 		//store the index so that we can build FDLayout later. 
 		if(game.isHomeGame){
 			if(game.pointsDifference > 0){indexes.home.win = i;}
@@ -83,19 +120,19 @@ function makeVisualizationTwo(theData, svg){
 
 	//force directed layout //link: https://github.com/mbostock/d3/wiki/Force-Layout
 	var force = d3.layout.force()
-		.charge(-129)
+		.charge(configOptions.circleRepelFactor)
 		.size([visualizationWidth, visualizationHeight])
 		.links(links)
-		.linkDistance(12)
+		.linkDistance(configOptions.linkDistance)
 		.nodes(gameSet)
-		.gravity(0.34)
+		.gravity(configOptions.gravity)
 		.start();
 
 	//setup color scaler
 	var colorScale = d3.scale.linear()
-		    .domain([-greatestPointsDifference, 0, greatestPointsDifference])
+		    .domain([greatestNegPointsDifference, -1, 1, greatestPosPointsDifference])
 		    .interpolate(d3.interpolateRgb)
-		    .range([d3.rgb(255,0,0), "grey", d3.rgb(0,255,0)]);
+		    .range(configOptions.colours);
 		
 	//set of circles ...
 	var circles = svgElem.selectAll("circle")
@@ -124,13 +161,39 @@ function makeVisualizationTwo(theData, svg){
 	
 		//update labels depending on their content. as the focui of the two clusters move.
 		labels.attr("x", function(data){
+			var lowestX_home = function(){
+				var v=Number.POSITIVE_INFINITY; 
+				gameSet.forEach(function(game){if (game.x < v && game.isHomeGame){v=game.x;};}); 
+				return v;}();
+			var lowestX_away = function(){
+				var v=Number.POSITIVE_INFINITY; 
+				gameSet.forEach(function(game){if (game.x < v && !game.isHomeGame){v=game.x;};}); 
+				return v;}();
+			var highestX_home = function(){
+				var v=Number.NEGATIVE_INFINITY;
+				gameSet.forEach(function(game){if (game.x > v && game.isHomeGame){v=game.x;};}); 
+				return v;}();
+			var highestX_away = function(){
+				var v=Number.NEGATIVE_INFINITY; 
+				gameSet.forEach(function(game){if (game.x > v && !game.isHomeGame){v=game.x;};}); 
+				return v;}();
+			
 			//Half widths for(to center labels )halfWinnerLabelWidth = 42 halfLoserLabelWidth = 31;
-			if(data.lbl=="Home!"){ return gameSet[indexes.home.win].x-22; }
-			else { return gameSet[indexes.away.win].x-15; }
+			if(data.lbl=="Home!"){ return ((lowestX_home+highestX_home)/2)-14; }
+			else { return ((lowestX_away+highestX_away)/2) -13; }
 		})
 		.attr("y", function(data){
-			if(data.lbl=="Home!"){ return gameSet[indexes.home.win].y-75; }
-			else { return gameSet[indexes.away.win].y-75; }
+			var lowestY_home = function(){
+				var v=Number.POSITIVE_INFINITY; 
+				gameSet.forEach(function(game){if (game.y < v && game.isHomeGame){v=game.y;};}); 
+				return v;}();
+			var lowestY_away = function(){
+				var v=Number.POSITIVE_INFINITY; 
+				gameSet.forEach(function(game){if (game.y < v && !game.isHomeGame){v=game.y;};}); 
+				return v;}();
+						
+			if(data.lbl=="Home!"){ return lowestY_home+configOptions.verticalOffsetLabel; }
+			else { return lowestY_away+configOptions.verticalOffsetLabel; }
 		});
 	});
 } //end makeVisualizationTwo
