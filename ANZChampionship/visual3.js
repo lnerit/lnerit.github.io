@@ -1,4 +1,5 @@
 //function to display Season/Round Placements
+var callFunction;
 function RoundPlacement(theData, svg){
 //define dimensions of svg canvas
 var margin = [40, 40, 60, 40]; // margins
@@ -27,14 +28,17 @@ tmpYear = showYear;
 
 // Add an SVG element with the desired dimensions and margin.
 
-var titleDiv = d3.select(svg)
+
+var titleDiv = d3.select('#filterByIndividualTeam')
 	.append('div')
 	.attr('class','removeTitle')
 	.style('padding-top', '2px')
+	.style('float', 'center')
 	.style('text-align', 'left')
 var select = titleDiv.append('div')
 	.attr('class','remove')
 	.append('select')
+	.attr('id','removeTitle')
 	.on('change', function(e){sTeam = this.value;d3.select('#teamA')
 
 	graph.selectAll('.area').remove();
@@ -43,9 +47,10 @@ var select = titleDiv.append('div')
 	tmpYear = showYear;
 	selectA.property('value', showYear);
 	selectB.property('value',sTeam);
-	update()
+	update();
 
 });
+
 var filterTeam = d3.select('filterTeam');
 filterTeam.append('div')
 	.attr('class','fteam')
@@ -273,7 +278,7 @@ function drawGraph(dataSet){
 		.data([dataSet]);//bind data
 	var sd = null;
 	var yearR = null;
-  
+
 	ctx.enter().append('g')
 		.attr('class', 'line')
 		.attr('team',tmpTeam)
@@ -292,7 +297,7 @@ function drawGraph(dataSet){
 		sd = t;
 		yearR = d3.select(this).attr('year');
 		d3.select(this).classed('selected',true);
-		
+
 	})
 	.on('mouseover', function() {
 			d3.selectAll('.hovertext')
@@ -313,7 +318,7 @@ function drawGraph(dataSet){
 				tmpTeam = sTeam; selectB.property('value',sTeam); update();
 				other.property('value', sTeam);
 				d3.selectAll('#teamname').html(sTeam);
-				
+
 			}).style('margin-left', '50px').style('color','red').style('text-decoration', 'underline');
 		});
 	*/
@@ -345,15 +350,16 @@ function drawGraph(dataSet){
 
 update();
 
-var filterDiv = d3.select(svg).append('div').attr('class','remove').style('text-align','center');
+var filterDiv = d3.select('#filterByTeam').append('div').attr('class','remove').style('text-align','center');
 var selectB = filterDiv.append('select').on('change', function(e){tmpTeam = this.value;});
-
 selectB.selectAll('option')
 .data(teamList).enter()
 .append('option')
 .attr('value', function(e){
 	return e;})
-	.text(function(d){return d;});
+	.text(function(d){return d;})
+.style('width','200px');
+
 selectB.property('value', sTeam);
 tmpTeam = sTeam;
 
@@ -362,6 +368,7 @@ var selectA = filterDiv.append('select').on('change', function(e){tmpYear = this
 selectA.selectAll('option')
 .data(['All'].concat(listYears)).enter()
 .append('option')
+.style('width','200px')
 .attr('value', function(e){
 	return e;})
 	.text(function(d){return d;});
@@ -371,13 +378,15 @@ var select = filterDiv.append('input')
 	.attr('type', 'button')
 	.attr('value', 'Display')
 	.style('padding','2px')
+	.style('width','200px')
 	.on('click', function(e){update();});
+filterDiv.append('br')
 
 var select = filterDiv.append('input')
 	.attr('type', 'button')
-	.style('space','&nbsp;&nbsp;')
 	.attr('value', 'Reset')
 	.style('padding','2px')
+	.style('width','200px')
 	.on('click', function(e){
 		graph.selectAll('.area').remove();
 		graph.selectAll('circle').remove();
@@ -391,6 +400,7 @@ var select = filterDiv.append('input')
 	.attr('type', 'button')
 	.attr('value', 'All Rounds')
 	.style('padding','2px')
+	.style('width','200px')
 	.on('click', function(e){
 		var temp = tmpYear;
 		listYears.forEach(function(e) {tmpYear = e; update();});

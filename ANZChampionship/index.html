@@ -15,21 +15,22 @@
   <script src="https://maps.googleapis.com/maps/api/js?v=3.exp"></script>
   <script type="text/javascript" src="js/jquery-1.9.1.js"></script>
   <script type="text/javascript" src="js/jquery-ui.js"></script>
-    <script type="text/javascript" src="js/helperfunctions.js"></script>
-  
+  <script type="text/javascript" src="js/helperfunctions.js"></script>
+
   <!-- Visualization and Data Processing Includes -->
   <script type="text/javascript" src="script.js"></script>
   <script type="text/javascript" src="visual2.js"></script>
   <script type="text/javascript" src="visual3.js"></script>
 
 
-
-  <script>
+	<script>
     //This fucntion runs when the page is ready...
 	$( document ).ready(function() {
 		$( "#tabs" ).tabs();		//make the tabbed content into tabs.
-		LoadYearToFilterBox();		// load years into filter box.
-		
+
+
+		//LoadYearToFilterBox();		// load years into filter box.
+
 		//attach eventHandlers a function which clears the left-side-bar everytime the tabs are changed.
 		$( "#tabs" ).on( "tabsactivate", function( event, ui ) {
 			$('#info-01').html("");
@@ -44,26 +45,24 @@
 		$('#teamB').on("change", function (event){filtersHaveChanged();});
 		$('#yearFilter').on("change", function (event){filtersHaveChanged();});
 		$('#seasonPartFilter').on("change", function (event){filtersHaveChanged();});
-		
-	});
 
-	//The page calls this function when the data has been loaded for the first time. 
+	});
+</script>
+
+<script>
+	//The page calls this function when the data has been loaded for the first time.
 	function dataIsREady(){
 		//call Next functions.. to draw visualization 2.
 		makeVisualizationTwo(allTeams, document.getElementById("visual_holder_overview"));
 		RoundPlacement(allSeasons,document.getElementById("visualization-1"));
 	}
-	
-	//The page calls this function when new filters are selected or changed. 
+
+	//The page calls this function when new filters are selected or changed.
 	function filtersHaveChanged(){
-		alert("Filters changed. Please redraw your visualization if needed.");
-	
+		//alert("Filters changed. Please redraw your visualization if needed.");
 	}
-
-
-  </script>
-
-  <script type="text/javascript">
+</script>
+<script>
 	//Google maps stuff below.
 	var lat=-41.285361,lng=174.778647;
 	var locationName="TSB Bank,Wellington";
@@ -80,10 +79,12 @@
 	}
 	google.maps.event.addDomListener(window, 'load', initialize);
   </script>
+
+
 </head>
 
 <body>
-	<div id="outerContainer" class="borderSection";>
+	<div id="outerContainer" class="borderSection">
 		<div id="titleContainer" style="vertical-align: top; display: inline-block;">
 			<div style="display: inline-block; vertical-align: top;">
 				<img alt="Logo" src="images/anz_champ_logo.png" style="height: 95px;"/>
@@ -134,25 +135,14 @@
 			<div id="filterArea" class="borderSection" style="width: 21%; height: 600px;">
 				<p style = "text-align: center; font-weight: bold; text-decoration: underline;"> FILTER OPTIONS </p><br>
 				<div style = "position: relative; top: 0px; right: 4px;">
-					<div class = "filterBorder" style = "position:relative;top:0px;float: right; border: 2px; border-style: solid; border-radius: 15px;width:95%;height:100px;">
-						<div class="filterBy" style = "position: relative; top: 5px; left: 5px;">
-							<div style = "">
-								Games <br>
-								<select id="yearFilter"></select>
-							</div>
-							<div style = "">
-								<select id="seasonPartFilter">
-								  <option value="AllSeasons">All</option>
-								  <option value="finalSeason">Final</option>
-								  <option value="regularSeason">Regular</option>
-								</select>
-							</div>
-						</div>
-
+					<div class = "filterByIndividualTeam" id="filterByIndividualTeam" style = "position:relative;top:0px;float: right; border: 2px; border-style: solid; border-radius: 15px;width:95%;height:100px;">
+						<h3>Filter By Team:</h3>
 					</div>
-					<div class = "filterByTeam" style = "position:relative;top:2px;float: right; border: 2px; border-style: solid; border-radius: 15px;width:95%;height:100px;">
+					<div class = "filterByTeam" id="filterByTeam" style = "position:relative;top:2px;float: right; border: 2px; border-style: solid; border-radius: 15px;width:95%;height:300px;">
+						<h3>Advance Filter Options</h3>
 						<div class="filterTeam" style = "position: relative; top: 5px; left: 5px; width:200px;">
-							Teams <br>
+							<div id="teamA"></div>
+							<!--
 							<select id="teamA" onchange="checkTeam(this)">
 							  <option value="NZTeam">New Zealand Teams</option>
 							  <option value="CentralPulse" selected="selected">Central Pulse</option>
@@ -186,36 +176,27 @@
 							  <option value="Southern Steel">Southern Steel</option>
 							  <option value="CanterburyTactix">Canterbury Tactix</option>
 							</select>
-						</div>
+							-->
+
 					</div>
 
-					<div class = "Teams" style = "position:relative;top:4px;float: right; border: 2px; border-style: solid; border-radius: 15px;width:95%;height:100px;">
+					 <!-- <div class = "Teams" style = "position:relative;top:4px;float: right; border: 2px; border-style: solid; border-radius: 15px;width:95%;height:100px;">
 					  <div class="Teamfilter" style = "position: relative; top: 5px; left: 5px;"></div>
 					</div>
+					 -->
 				</div>
 			</div>
 		</div>
 
 	</div>
-	<script type="text/javascript">
-	  /* Make focus team boxes.*/
-	  
-	  <!-- Function to load team names into array-->
-		var x=document.getElementById("teamB");
-	 function checkTeam(select){
-		  var selectedOption = select.options[select.selectedIndex];
-	/* 	  //alert ("The selected option is " + selectedOption.text);
-		//var nz=document.getElementById("teamA");
-		//var t_name=x.options[0].text;
-		var s=selectedOption.text;
-		for (var i=0;i<=x.length;i++){
-			//if (t_name==selectedOption){
-				if (x.options[i].text==s){
-					alert(x.options[i].text);
-				};
-			//}
-		}*/
-	  }
-	</script>
+	</div>
+<script>
+$('#tabs').tabs({
+    select: function(event, ui) {
+        console.log($(ui.tab)); // the tab selected
+        alert('	xxx' + ui.index);
+    }
+});
+</script>
 </body>
 </html>
