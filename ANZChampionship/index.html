@@ -21,14 +21,32 @@
   <script type="text/javascript" src="script.js"></script>
   <script type="text/javascript" src="visual2.js"></script>
   <script type="text/javascript" src="visual3.js"></script>
+    <script type="text/javascript" src="rivalry.js"></script>
 
 
 	<script>
     //This fucntion runs when the page is ready...
 	$( document ).ready(function() {
 		$( "#tabs" ).tabs();		//make the tabbed content into tabs.
+		 var $tabs = $("#tabs").tabs();
+		 var selected = $tabs.tabs('href', 'selected');
 
-
+	        // Run a switch on that selected tab and do what you need depending
+	        // on which tab was selected.
+	        switch(selected){
+	            case 0:
+	            	alert(selected);
+	              break;
+	            case 1:
+	            	alert(selected);
+	              break;
+	            case 2:
+	            	alert(selected);
+	            	break;
+	            case 3:
+	            	alert(selected);
+	              break;
+	        }   
 		//LoadYearToFilterBox();		// load years into filter box.
 
 		//attach eventHandlers a function which clears the left-side-bar everytime the tabs are changed.
@@ -47,6 +65,11 @@
 		$('#seasonPartFilter').on("change", function (event){filtersHaveChanged();});
 
 	});
+	$('#tabs').tabs({
+		  select: function(event,ui) {
+		     alert('selected: '+ui.index);
+		  }
+		});
 </script>
 
 <script>
@@ -55,6 +78,7 @@
 		//call Next functions.. to draw visualization 2.
 		makeVisualizationTwo(allTeams, document.getElementById("visual_holder_overview"));
 		RoundPlacement(allSeasons,document.getElementById("visualization-1"));
+		makeRivalry(allTeams, document.getElementById("Rivalry"))
 	}
 
 	//The page calls this function when new filters are selected or changed.
@@ -124,10 +148,9 @@
 				  <div id="visualization-1"></div>
 				  <div id="visualization-2">
 					<p>Visualization 2 goes here. Home VS Away games. Red is a loss, green is a win. </p>
-					<svg id="visual_holder2"></svg>
+					<svg id="visual_holder"></svg>
 				  </div>
 				  <div id="Rivalry">
-					<svg id="visual_holder3"></svg>
 				  </div>
 				</div>
 			</div>

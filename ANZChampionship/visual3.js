@@ -23,8 +23,8 @@ var line = d3.svg.line()
 	return y(d);
 })
 
-var tmpTeam = sTeam;
-tmpYear = showYear;
+var tmpTeam = netballTeam;
+tmpYear = showAllYear;
 
 // Add an SVG element with the desired dimensions and margin.
 
@@ -39,14 +39,14 @@ var select = titleDiv.append('div')
 	.attr('class','remove')
 	.append('select')
 	.attr('id','removeTitle')
-	.on('change', function(e){sTeam = this.value;d3.select('#teamA')
+	.on('change', function(e){netballTeam = this.value;d3.select('#teamA')
 
 	graph.selectAll('.area').remove();
 	graph.selectAll('circle').remove();
-	tmpTeam = sTeam;
-	tmpYear = showYear;
-	selectA.property('value', showYear);
-	selectB.property('value',sTeam);
+	tmpTeam = netballTeam;
+	tmpYear = showAllYear;
+	selectA.property('value', showAllYear);
+	selectB.property('value',netballTeam);
 	update();
 
 });
@@ -61,8 +61,8 @@ filterTeam.append('div')
 
 	graph.selectAll('.area').remove();
 	graph.selectAll('circle').remove();
-	tmpYear = showYear;
-	//selectA.property('value', showYear);
+	tmpYear = showAllYear;
+	//selectA.property('value', showAllYear);
 	update()
 
 });
@@ -74,7 +74,7 @@ select.selectAll('option')
 	return e;})
 	.text(function(d){return d;});
 
-select.property('value', sTeam);
+select.property('value', netballTeam);
 var other = select;
 
 //Add an SVG element with the desired dimensions and margin.
@@ -310,14 +310,14 @@ function drawGraph(dataSet){
 				d3.selectAll('.hovertext').text('Click a line for more options. Right click to delete a single line.'); return;
 			}
 			d3.selectAll('.hovertext').html('<span id="span1" class="hovered"> See Rivalry With This Team </span> ' + toReview + " (" + yearR + ") <span id='span2' class='hovered'> Switch To This Team </span>");
-			d3.selectAll('#span1').on('click', function(e) {if (sTeam == toReview) {alert("You can't have a rivalry with yourself."); return;}rival1 = sTeam; rival2 = toReview; switchTo('rival');}).style('margin-right','50px').style('color','green').style('text-decoration','underline');
+			d3.selectAll('#span1').on('click', function(e) {if (netballTeam == toReview) {alert("You can't have a rivalry with yourself."); return;}rival1 = netballTeam; rival2 = toReview; switchTo('rival');}).style('margin-right','50px').style('color','green').style('text-decoration','underline');
 			d3.selectAll('#span2').on('click', function(e) {
-				sTeam = toReview;
+				netballTeam = toReview;
 				//graph.selectAll('.area').remove();
 				//graph.selectAll('circle').remove();
-				tmpTeam = sTeam; selectB.property('value',sTeam); update();
-				other.property('value', sTeam);
-				d3.selectAll('#teamname').html(sTeam);
+				tmpTeam = netballTeam; selectB.property('value',netballTeam); update();
+				other.property('value', netballTeam);
+				d3.selectAll('#teamname').html(netballTeam);
 
 			}).style('margin-left', '50px').style('color','red').style('text-decoration', 'underline');
 		});
@@ -325,7 +325,7 @@ function drawGraph(dataSet){
 
 	ctx.selectAll('path').data(function(d) {return [d];}).enter().append("path")
 	.attr("class", "area")
-	.style('stroke', function(d) {if (tmpTeam == sTeam && tmpYear == showYear) return 'black';return color(tmpTeam + "" + tmpYear);}).style('stroke-width', '4').style('fill', 'none')
+	.style('stroke', function(d) {if (tmpTeam == netballTeam && tmpYear == showAllYear) return 'black';return color(tmpTeam + "" + tmpYear);}).style('stroke-width', '4').style('fill', 'none')
 	.transition()
 	.duration(2000)
 	.attrTween('d', function(data) {
@@ -360,8 +360,8 @@ selectB.selectAll('option')
 	.text(function(d){return d;})
 .style('width','200px');
 
-selectB.property('value', sTeam);
-tmpTeam = sTeam;
+selectB.property('value', netballTeam);
+tmpTeam = netballTeam;
 
 var selectA = filterDiv.append('select').on('change', function(e){tmpYear = this.value;});
 
@@ -372,7 +372,7 @@ selectA.selectAll('option')
 .attr('value', function(e){
 	return e;})
 	.text(function(d){return d;});
-selectA.property('value', showYear);
+selectA.property('value', showAllYear);
 
 var select = filterDiv.append('input')
 	.attr('type', 'button')
@@ -390,9 +390,9 @@ var select = filterDiv.append('input')
 	.on('click', function(e){
 		graph.selectAll('.area').remove();
 		graph.selectAll('circle').remove();
-		tmpTeam = sTeam; tmpYear = showYear;
-		selectA.property('value', showYear);
-		selectB.property('value',sTeam);
+		tmpTeam = netballTeam; tmpYear = showAllYear;
+		selectA.property('value', showAllYear);
+		selectB.property('value',netballTeam);
 
 ;});
 
@@ -410,6 +410,6 @@ var select = filterDiv.append('input')
 d3.selectAll('.picker').on('change', function(e){
 	graph.selectAll('.area').remove();
 	graph.selectAll('circle').remove();
-tmpTeam = sTeam; tmpYear = showYear; selectA.property('value', showYear); selectB.property('value',sTeam); update();});
+tmpTeam = netballTeam; tmpYear = showAllYear; selectA.property('value', showAllYear); selectB.property('value',netballTeam); update();});
 }
 
