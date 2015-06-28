@@ -48,9 +48,9 @@ function drawVisualTwo(theData, svg){
 
 var configOptions = {
 	verticalOffsetLabel: -25,
-	gravity: 0.35,
+	gravity: 0.38,
 	linkDistance: 13,
-	circleRepelFactor: -330,
+	circleRepelFactor: -365,
 	colours: [d3.rgb(255,0,0), d3.rgb(90,0,0),d3.rgb(0,90,0), d3.rgb(0,255,0)],
 	rad: 14
 };
