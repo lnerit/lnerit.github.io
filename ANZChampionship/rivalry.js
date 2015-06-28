@@ -16,6 +16,7 @@ var explYear = 0;
 var explRound = 1;
 var dataSuffix = "-Table1.csv";
 var dataPrefix = "http://www.ecs.vuw.ac.nz/~stuart";
+var margin = [300, 40, 60, 310]; // margins
 
 function startTest() {
     loadTeams();
@@ -59,7 +60,7 @@ function dispExpl() {
 			.attr("width", width)
 			.attr("height", height)
 			.append("g")
-			.attr("transform","translate(" + ((con.w / 2) + con.x) + "," + ((con.h / 2) + con.y) + ")");
+			.attr("transform", "translate(" + margin[3] + "," + margin[0] + ")");
 	svg.append("g")
 			.attr("id", "explLines");
 
@@ -81,7 +82,7 @@ function dispExpl() {
 function updExpl() {
 	var lines = d3.select("#explLines");
 	d3.selectAll(".gameLine").remove();
-	lines.empty();
+	//lines.empty();
 
 	var round = years[explYear].rounds[explRound];
 	alert("jestin");
