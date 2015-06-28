@@ -1,35 +1,38 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>ANZ Championships Data Visualization</title>
+<title>ANZ Championships Data Visualization</title>
 
-  <meta charset="utf-8">
-  <meta http-equiv="Content-Type" content="text/html;charset=utf-8">
-  <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
+<meta charset="utf-8">
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8">
+<meta name="viewport" content="initial-scale=1.0, user-scalable=no">
 
-  <link rel="stylesheet" type="text/css" href="css/jquery-ui.min.css">
-  <link rel="stylesheet" type="text/css" href="style.css">
+<link rel="stylesheet" type="text/css" href="css/jquery-ui.min.css">
+<link rel="stylesheet" type="text/css" href="style.css">
 
-  <!-- Library includes -->
-  <script type="text/javascript" src="js/d3.v3.min.js"></script>
-  <script src="https://maps.googleapis.com/maps/api/js?v=3.exp"></script>
-  <script type="text/javascript" src="js/jquery-1.9.1.js"></script>
-  <script type="text/javascript" src="js/jquery-ui.js"></script>
-    <script type="text/javascript" src="js/helperfunctions.js"></script>
-  
-  <!-- Visualization and Data Processing Includes -->
-  <script type="text/javascript" src="script.js"></script>
-  <script type="text/javascript" src="visual2.js"></script>
-  <script type="text/javascript" src="visual3.js"></script>
+<!-- Library includes -->
+<script type="text/javascript" src="js/d3.v3.min.js"></script>
+<script src="https://maps.googleapis.com/maps/api/js?v=3.exp"></script>
+<script type="text/javascript" src="js/jquery-1.9.1.js"></script>
+<script type="text/javascript" src="js/jquery-ui.js"></script>
+<script type="text/javascript" src="js/helperfunctions.js"></script>
+<script type="text/javascript" src="js/d3.min.js"></script>
+<script type="text/javascript" src="js/moment.min.js">
+    </script>
+<!-- Visualization and Data Processing Includes -->
+<script type="text/javascript" src="script.js"></script>
+<script type="text/javascript" src="visual2.js"></script>
+<script type="text/javascript" src="visual3.js"></script>
+<script type="text/javascript" src="rivalry.js"></script>
 
 
 
-  <script>
+<script>
     //This fucntion runs when the page is ready...
 	$( document ).ready(function() {
 		$( "#tabs" ).tabs();		//make the tabbed content into tabs.
 		LoadYearToFilterBox();		// load years into filter box.
-		
+
 		//attach eventHandlers a function which clears the left-side-bar everytime the tabs are changed.
 		$( "#tabs" ).on( "tabsactivate", function( event, ui ) {
 			$('#info-01').html("");
@@ -44,26 +47,27 @@
 		$('#teamB').on("change", function (event){filtersHaveChanged();});
 		$('#yearFilter').on("change", function (event){filtersHaveChanged();});
 		$('#seasonPartFilter').on("change", function (event){filtersHaveChanged();});
-		
+
 	});
 
-	//The page calls this function when the data has been loaded for the first time. 
+	//The page calls this function when the data has been loaded for the first time.
 	function dataIsREady(){
 		//call Next functions.. to draw visualization 2.
 		makeVisualizationTwo(allTeams, document.getElementById("visual_holder_overview"));
 		RoundPlacement(allSeasons,document.getElementById("visualization-1"));
+		makeRivalry(allSeasons, document.getElementById("Rivalry"));
 	}
-	
-	//The page calls this function when new filters are selected or changed. 
+
+	//The page calls this function when new filters are selected or changed.
 	function filtersHaveChanged(){
 		alert("Filters changed. Please redraw your visualization if needed.");
-	
+
 	}
 
 
   </script>
 
-  <script type="text/javascript">
+<script type="text/javascript">
 	//Google maps stuff below.
 	var lat=-41.285361,lng=174.778647;
 	var locationName="TSB Bank,Wellington";
@@ -83,20 +87,27 @@
 </head>
 
 <body>
-	<div id="outerContainer" class="borderSection";>
-		<div id="titleContainer" style="vertical-align: top; display: inline-block;">
+	<div id="outerContainer" class="borderSection">
+		<div id="titleContainer"
+			style="vertical-align: top; display: inline-block;">
 			<div style="display: inline-block; vertical-align: top;">
-				<img alt="Logo" src="images/anz_champ_logo.png" style="height: 95px;"/>
+				<img alt="Logo" src="images/anz_champ_logo.png"
+					style="height: 95px;" />
 			</div>
 			<div class="title" style="display: inline-block;">
-				<p style="margin: 0; padding: 0; font-size: 300%;">ANZ Netball Championship Visualiser</p>
+				<p style="margin: 0; padding: 0; font-size: 300%;">ANZ Netball
+					Championship Visualiser</p>
 			</div>
 		</div>
-		<div id="innerContainer" >
-			<div id="informationArea" class="borderSection" style = "width: 12%; height: 600px; ">
-				<p style = "text-align: center; font-weight: bold; text-decoration: underline;"> MATCH DETAILS </p><br>
-				<div style = "position: relative; top: 5px; left: 5px;">
-					<div class = "text" style="width:124px; height:150px">
+		<div id="innerContainer">
+			<div id="informationArea" class="borderSection"
+				style="width: 12%; height: 600px;">
+				<p
+					style="text-align: center; font-weight: bold; text-decoration: underline;">
+					MATCH DETAILS</p>
+				<br>
+				<div style="position: relative; top: 5px; left: 5px;">
+					<div class="text" style="width: 124px; height: 150px">
 						<p id="info-01">&nbsp;</p>
 						<p id="info-02">&nbsp;</p>
 						<p id="info-03">&nbsp;</p>
@@ -105,92 +116,109 @@
 						<p id="info-06">&nbsp;</p>
 					</div>
 				</div>
-				<div id="map-canvas" style="position: relative; top: 180px; float:bottom;border-width:1px;border-style:solid;border-radius:15px; height:200px"></div>
+				<div id="map-canvas"
+					style="position: relative; top: 180px; float: bottom; border-width: 1px; border-style: solid; border-radius: 15px; height: 200px"></div>
 			</div>
 
-			<div id="canvasArea" class="borderSection" style="width: 65%; height: 600px;">
+			<div id="canvasArea" class="borderSection"
+				style="width: 65%; height: 600px;">
 				<div id="tabs" style="border: 0px; margin: 6px;">
-				  <ul>
-					<li><a href="#overview">Overview</a></li>
-					<li><a href="#visualization-1">Season Placement</a></li>
-					<li><a href="#visualization-2">Home VS Away</a></li>
-					<li><a href="#Rivalry">Rivalry</a></li>
-				  </ul>
-				  <div id="overview">
-					<p>Overview of All games </p>
-					<svg id="visual_holder_overview"></svg>
-				  </div>
-				  <div id="visualization-1"></div>
-				  <div id="visualization-2">
-					<p>Visualization 2 goes here. Home VS Away games. Red is a loss, green is a win. </p>
-					<svg id="visual_holder2"></svg>
-				  </div>
-				  <div id="Rivalry">
-					<svg id="visual_holder3"></svg>
-				  </div>
+					<ul>
+						<li><a href="#overview">Overview</a></li>
+						<li><a href="#visualization-1">Season Placement</a></li>
+						<li><a href="#visualization-2">Home VS Away</a></li>
+						<li><a href="#Rivalry">Rivalry</a></li>
+					</ul>
+					<div id="overview">
+						<p>Overview of All games</p>
+						<svg id="visual_holder_overview"></svg>
+					</div>
+					<div id="visualization-1"></div>
+					<div id="visualization-2">
+						<p>Visualization 2 goes here. Home VS Away games. Red is a
+							loss, green is a win.</p>
+						<svg id="visual_holder2"></svg>
+					</div>
+					<div id="Rivalry">
+						<svg id="rivalry"></svg>
+					</div>
 				</div>
 			</div>
 
-			<div id="filterArea" class="borderSection" style="width: 21%; height: 600px;">
-				<p style = "text-align: center; font-weight: bold; text-decoration: underline;"> FILTER OPTIONS </p><br>
-				<div style = "position: relative; top: 0px; right: 4px;">
-					<div class = "filterBorder" style = "position:relative;top:0px;float: right; border: 2px; border-style: solid; border-radius: 15px;width:95%;height:100px;">
-						<div class="filterBy" style = "position: relative; top: 5px; left: 5px;">
-							<div style = "">
-								Games <br>
-								<select id="yearFilter"></select>
+			<div id="filterArea" class="borderSection"
+				style="width: 21%; height: 600px;">
+				<p
+					style="text-align: center; font-weight: bold; text-decoration: underline;">
+					FILTER OPTIONS</p>
+				<br>
+				<div style="position: relative; top: 0px; right: 4px;">
+					<div class="filterBorder"
+						style="position: relative; top: 0px; float: right; border: 2px; border-style: solid; border-radius: 15px; width: 95%; height: 100px;">
+						<div class="filterBy"
+							style="position: relative; top: 5px; left: 5px;">
+							<div style="">
+								Games <br> <select id="yearFilter"></select>
 							</div>
-							<div style = "">
+							<div style="">
 								<select id="seasonPartFilter">
-								  <option value="AllSeasons">All</option>
-								  <option value="finalSeason">Final</option>
-								  <option value="regularSeason">Regular</option>
+									<option value="AllSeasons">All</option>
+									<option value="finalSeason">Final</option>
+									<option value="regularSeason">Regular</option>
 								</select>
 							</div>
 						</div>
 
 					</div>
-					<div class = "filterByTeam" style = "position:relative;top:2px;float: right; border: 2px; border-style: solid; border-radius: 15px;width:95%;height:100px;">
-						<div class="filterTeam" style = "position: relative; top: 5px; left: 5px; width:200px;">
-							Teams <br>
-							<select id="teamA" onchange="checkTeam(this)">
-							  <option value="NZTeam">New Zealand Teams</option>
-							  <option value="CentralPulse" selected="selected">Central Pulse</option>
-							  <option value="NorthernMystics">Northern Mystics</option>
-							  <option value="WaikatobayofPlentyMagic">Waikato Bay of Plenty Magic</option>
-							  <option value="Southern Steel">Southern Steel</option>
-							  <option value="CanterburyTactix">Canterbury Tactix</option>
+					<div class="filterByTeam"
+						style="position: relative; top: 2px; float: right; border: 2px; border-style: solid; border-radius: 15px; width: 95%; height: 100px;">
+						<div class="filterTeam"
+							style="position: relative; top: 5px; left: 5px; width: 200px;">
+							Teams <br> <select id="teamA" onchange="checkTeam(this)">
+								<option value="NZTeam">New Zealand Teams</option>
+								<option value="CentralPulse" selected="selected">Central
+									Pulse</option>
+								<option value="NorthernMystics">Northern Mystics</option>
+								<option value="WaikatobayofPlentyMagic">Waikato Bay of
+									Plenty Magic</option>
+								<option value="Southern Steel">Southern Steel</option>
+								<option value="CanterburyTactix">Canterbury Tactix</option>
 
-							  <option value="AussieTeam">Australia Team</option>
-							  <option value="NewSouthWhalesSwifts">New South Whales Swifts</option>
-							  <option value="AdelaideThunderBirds">Adelaide Thunder Birds</option>
-							  <option value="MelbourneVixens">Melbourne Vixens</option>
-							  <option value="WestCoastFever">West Coast Fever</option>
-							  <option value="QueenslandFirebirds">Queensland Firebirds</option>
-							</select>
-							<br>
-							<label style = "text-align: center;">versus</label>
-							<br>
+								<option value="AussieTeam">Australia Team</option>
+								<option value="NewSouthWhalesSwifts">New South Whales
+									Swifts</option>
+								<option value="AdelaideThunderBirds">Adelaide Thunder
+									Birds</option>
+								<option value="MelbourneVixens">Melbourne Vixens</option>
+								<option value="WestCoastFever">West Coast Fever</option>
+								<option value="QueenslandFirebirds">Queensland
+									Firebirds</option>
+							</select> <br> <label style="text-align: center;">versus</label> <br>
 							<select id="teamB">
-							  <option value="AussieTeam">Australia Team</option>
-							  <option value="NewSouthWhalesSwifts" selected="selected" >New South Whales Swifts</option>
-							  <option value="AdelaideThunderBirds">Adelaide Thunder Birds</option>
-							  <option value="MelbourneVixens">Melbourne Vixens</option>
-							  <option value="WestCoastFever">West Coast Fever</option>
-							  <option value="QueenslandFirebirds">Queensland Firebirds</option>
+								<option value="AussieTeam">Australia Team</option>
+								<option value="NewSouthWhalesSwifts" selected="selected">New
+									South Whales Swifts</option>
+								<option value="AdelaideThunderBirds">Adelaide Thunder
+									Birds</option>
+								<option value="MelbourneVixens">Melbourne Vixens</option>
+								<option value="WestCoastFever">West Coast Fever</option>
+								<option value="QueenslandFirebirds">Queensland
+									Firebirds</option>
 
-							  <option value="NZTeam">New Zealand Team</option>
-							  <option value="CentralPulse">Central Pulse</option>
-							  <option value="NorthernMystics">Northern Mystics</option>
-							  <option value="WaikatobayofPlentyMagic">Waikato Bay of Plenty Magic</option>
-							  <option value="Southern Steel">Southern Steel</option>
-							  <option value="CanterburyTactix">Canterbury Tactix</option>
+								<option value="NZTeam">New Zealand Team</option>
+								<option value="CentralPulse">Central Pulse</option>
+								<option value="NorthernMystics">Northern Mystics</option>
+								<option value="WaikatobayofPlentyMagic">Waikato Bay of
+									Plenty Magic</option>
+								<option value="Southern Steel">Southern Steel</option>
+								<option value="CanterburyTactix">Canterbury Tactix</option>
 							</select>
 						</div>
 					</div>
 
-					<div class = "Teams" style = "position:relative;top:4px;float: right; border: 2px; border-style: solid; border-radius: 15px;width:95%;height:100px;">
-					  <div class="Teamfilter" style = "position: relative; top: 5px; left: 5px;"></div>
+					<div class="Teams"
+						style="position: relative; top: 4px; float: right; border: 2px; border-style: solid; border-radius: 15px; width: 95%; height: 100px;">
+						<div class="Teamfilter"
+							style="position: relative; top: 5px; left: 5px;"></div>
 					</div>
 				</div>
 			</div>
@@ -199,7 +227,7 @@
 	</div>
 	<script type="text/javascript">
 	  /* Make focus team boxes.*/
-	  
+
 	  <!-- Function to load team names into array-->
 		var x=document.getElementById("teamB");
 	 function checkTeam(select){

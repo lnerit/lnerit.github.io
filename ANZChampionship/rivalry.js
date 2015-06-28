@@ -75,14 +75,17 @@ function dispExpl() {
 	document.getElementById("rivalry").innerHTML += "<ul id='roundSel'><li class='roundBut' onClick='explRound=1;updExpl();'>1</li><li class='roundBut' onClick='explRound=2;updExpl();'>2</li><li class='roundBut' onClick='explRound=3;updExpl();'>3</li><li class='roundBut' onClick='explRound=4;updExpl();'>4</li><li class='roundBut' onClick='explRound=5;updExpl();'>5</li><li class='roundBut' onClick='explRound=6;updExpl();'>6</li><li class='roundBut' onClick='explRound=7;updExpl();'>7</li><li class='roundBut' onClick='explRound=8;updExpl();'>8</li><li class='roundBut' onClick='explRound=9;updExpl();'>9</li><li class='roundBut' onClick='explRound=10;updExpl();'>10</li><li class='roundBut' onClick='explRound=11;updExpl();'>11</li><li class='roundBut' onClick='explRound=12;updExpl();'>12</li><li class='roundBut' onClick='explRound=13;updExpl();'>13</li><li class='roundBut' onClick='explRound=14;updExpl();'>14</li><li class='roundBut' onClick='explRound=15;updExpl();'>15</li><li class='roundBut' onClick='explRound=16;updExpl();'>16</li><li class='roundBut' onClick='explRound=17;updExpl();'>17</li></ul>";
 
 	updExpl();
+
 }
 
 function updExpl() {
 	var lines = d3.select("#explLines");
 	d3.selectAll(".gameLine").remove();
 	// lines.empty();
+	//alert("test");
 	var round = years[explYear].rounds[explRound];
-	round.forEach(function(game) {
+	alert("jestin");
+	round.forEach(function() {
 		var loser = teamList.indexOf(game.home);
 		var winner = teamList.indexOf(game.away);
 		if (game.homePts > game.awayPts) {
@@ -117,7 +120,7 @@ function drawGameLine(lines, loser, winner) {
 }
 
 function drawSeg(f, h, i, col, nam) {
-	alert("in drawseg");
+
 	var arc = d3.svg.arc().innerRadius(h / 10 * 7.5 / 2).outerRadius(
 			h / 10 * 8 / 2).startAngle(Math.PI / 5 * i).endAngle(
 			Math.PI / 5 * (i + 1));
@@ -149,8 +152,8 @@ function addText(f, x, y, s, place) {
 }
 
 function updateDims() {
-	width = document.body.clientWidth;
-	height = window.innerHeight - 120;
+	width = document.body.clientWidth-450;
+	height = window.innerHeight - 320;
 }
 
 //Here downwards pretty much copied from CMS @ http://stackoverflow.com/questions/2854407/javascript-jquery-window-resize-how-to-fire-after-the-resize-is-completed
