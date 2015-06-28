@@ -70,7 +70,7 @@
 					break;
 
 				//When switching to rivalry tabs this code is run...
-				case "rivalry-div":
+				case "Rivalry":
 					//code here.
 					break;
 
@@ -101,7 +101,7 @@
 
 		RoundPlacement(allSeasons,document.getElementById("visualization-1"));
 		drawVisualTwo(allTeams, document.getElementById("visual_holder_overview"));
-		makeRivalry(allTeams, document.getElementById("rivalry"));
+		makeRivalry(allTeams, document.getElementById("Rivalry"));
 
 	}
 
@@ -112,7 +112,7 @@
 		drawVisualTwo(allTeams, document.getElementById("visual_holder_overview"));
 	}
 </script>
-<script>
+
 <script type="text/javascript">
 	//Google maps stuff below.
 	var lat=-41.285361,lng=174.778647;
@@ -175,7 +175,7 @@
 						<li><a href="#overview">Overview</a></li>
 						<li><a href="#visualization-1">Season Placement</a></li>
 						<li><a href="#visualization-2">Home VS Away</a></li>
-						<li><a href="#rivalry-div">Rivalry</a></li>
+						<li><a href="#Rivalry">Rivalry</a></li>
 					</ul>
 					<div id="overview">
 						<p>Overview of All games</p>
@@ -183,10 +183,10 @@
 					</div>
 					<div id="visualization-1"></div>
 					<div id="visualization-2">
-						<p>Visualization 2 goes here. Home VS Away games. Red is a loss.</p>
+						<p>Visualization 2 goes here. Home VS Away games. Red is a loss</p>
 					<svg id="visual_holder"></svg>
 					</div>
-					<div id="rivalry-div">
+					<div id="Rivalry">
 						<svg id="rivalry"></svg>
 					</div>
 				</div>
