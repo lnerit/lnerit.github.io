@@ -68,7 +68,7 @@ function makeVisualizationTwo(gameSet, svg){
 	}
 
 	//Get focus team from teamSelector. teamA.
-	var visualizationHeight = 490;
+	var visualizationHeight = 485;
 	var visualizationWidth = 615;
 
 	//Storage for various indexes. These are used to tie the force directed layout together. 
