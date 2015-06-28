@@ -1,5 +1,4 @@
 //function to display Season/Round Placements
-
 function RoundPlacement(theData, svg){
 	$("#visualization-1").html("")
 	$("#Rivalry").html("")
@@ -74,7 +73,7 @@ select.selectAll('option')
 select.property('value', netballTeam);
 var other = select;
 
-titleDiv.append('p').attr('class', 'hovertext').text('--');
+titleDiv.append('p').attr('class', 'hovertext').text('');
 
 
 //Add an SVG element with the desired dimensions and margin.
