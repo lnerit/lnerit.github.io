@@ -83,7 +83,6 @@ function updExpl() {
 	var lines = d3.select("#explLines");
 	d3.selectAll(".gameLine").remove();
 	//lines.empty();
-<<<<<<< HEAD
 	//alert("Welcome to ANZ Netball Championship Visualiser!!!");
 	//var round = years[explYear].rounds[explRound];
 	drawGameLine(lines, 2, 3);
@@ -100,21 +99,6 @@ function updExpl() {
 //		;
 //		drawGameLine(lines, loser, winner);
 //	});
-=======
-
-	var round = years[explYear].rounds[explRound];
-	round.forEach(function() {
-		var loser = teamList.indexOf(game.home);
-		var winner = teamList.indexOf(game.away);
-		if (game.homePts > game.awayPts) {
-			var t = loser;
-			loser = winner;
-			winner = t;
-		}
-		;
-		drawGameLine(lines, loser, winner);
-	});
->>>>>>> ac0cce2301d43e049913f710f295c73f5b16e1d5
 }
 
 function drawGameLine(lines, loser, winner) {
