@@ -10,14 +10,13 @@
 <link rel="stylesheet" type="text/css" href="css/jquery-ui.min.css">
 <link rel="stylesheet" type="text/css" href="style.css">
 
+<<<<<<< HEAD
 <!-- Library includes -->
 <script type="text/javascript" src="js/d3.v3.min.js"></script>
 <script src="https://maps.googleapis.com/maps/api/js?v=3.exp"></script>
 <script type="text/javascript" src="js/jquery-1.9.1.js"></script>
 <script type="text/javascript" src="js/jquery-ui.js"></script>
-  <script type="text/javascript" src="js/helperfunctions.js"></script>
-
-
+<script type="text/javascript" src="js/helperfunctions.js"></script>
 <script type="text/javascript" src="js/d3.min.js"></script>
 <script type="text/javascript" src="js/moment.min.js">
     </script>
@@ -28,11 +27,34 @@
 <script type="text/javascript" src="rivalry.js"></script>
 
 
+
+<script>
+    //This fucntion runs when the page is ready...
+	$( document ).ready(function() {
+		$( "#tabs" ).tabs();		//make the tabbed content into tabs.
+		LoadYearToFilterBox();		// load years into filter box.
+
+=======
+  <!-- Library includes -->
+  <script type="text/javascript" src="js/d3.v3.min.js"></script>
+  <script src="https://maps.googleapis.com/maps/api/js?v=3.exp"></script>
+  <script type="text/javascript" src="js/jquery-1.9.1.js"></script>
+  <script type="text/javascript" src="js/jquery-ui.js"></script>
+  <script type="text/javascript" src="js/helperfunctions.js"></script>
+
+  <!-- Visualization and Data Processing Includes -->
+  <script type="text/javascript" src="script.js"></script>
+  <script type="text/javascript" src="visual2.js"></script>
+  <script type="text/javascript" src="visual3.js"></script>
+  <script type="text/javascript" src="rivalry.js"></script>
+
+
 	<script>
     //This fucntion runs when the page is ready...
 	$( document ).ready(function() {
 		$( "#tabs" ).tabs();		//make the tabbed content into tabs.
-
+		
+>>>>>>> cbc42fcddd5a52b00891a1532c74b85b56cab39d
 		//attach eventHandlers a function which clears the left-side-bar everytime the tabs are changed.
 		$( "#tabs" ).on( "tabsactivate", function( event, ui ) {
 			$('#info-01').html("");
@@ -41,79 +63,103 @@
 			$('#info-04').html("");
 			$('#info-05').html("");
 			$('#info-06').html("");
-
+		
 			// Run a switch on that selected tab and do what you need depending
 	        // on which tab was selected.
 			console.log("Switching to tab: "+ JSON.stringify(ui.newPanel.attr('id')));
 			switch (ui.newPanel.attr('id')) {
-				//When switching to overview tab.. this code is run...
+				//When switching to overview tab.. this code is run... 
 				case "overview":
 					//Show this.
 					$("#circleTeamSelector-div").css('display', 'block');
-					//Hide this.
+					//Hide this. 
 					$("#filterByIndividualTeam").css('display', 'none');
 					$("#filterByTeam").css('display', 'none');
 					break;
-
-				//When switching to visualization-1 this code is run...
+				
+				//When switching to visualization-1 this code is run... 
 				case "visualization-1":
 					//Show this.
 					$("#filterByIndividualTeam").css('display', 'block');
 					$("#filterByTeam").css('display', 'block');
-					//Hide this.
+					//Hide this. 
 					$("#circleTeamSelector-div").css('display', 'none');
 					break;
-
-				//When switching to visualization-2 this code is run...
+				
+				//When switching to visualization-2 this code is run... 
 				case "visualization-2":
-					//code here.
+					//code here. 
 					break;
-
-				//When switching to rivalry tabs this code is run...
+				
+				//When switching to rivalry tabs this code is run... 
 				case "Rivalry":
-					//code here.
+					//code here. 
 					break;
-
-				//If none of the other code is run then this code is run.
+				
+				//If none of the other code is run then this code is run. 
 				default:
 					console.log("No actions defined for this tab switch. (default case)");
 			}
-
+			
 		} );
 		//attach eventHandlers to call function to redraw visulizations with new filters.
+<<<<<<< HEAD
+		$('#teamA').on("change", function (event){filtersHaveChanged();});
+		$('#teamB').on("change", function (event){filtersHaveChanged();});
+		$('#yearFilter').on("change", function (event){filtersHaveChanged();});
+		$('#seasonPartFilter').on("change", function (event){filtersHaveChanged();});
+=======
 		//$('#teamA').on("change", function (event){filtersHaveChanged();});
 		///$('#teamB').on("change", function (event){filtersHaveChanged();});
 		//$('#yearFilter').on("change", function (event){filtersHaveChanged();});
 		//$('#seasonPartFilter').on("change", function (event){filtersHaveChanged();});
-
+		
 		$('#circleTeamSelector').onchange = filtersHaveChanged();
+>>>>>>> cbc42fcddd5a52b00891a1532c74b85b56cab39d
 
 	});
-
-
-
+	
+	
+	
 </script>
 
+<<<<<<< HEAD
+=======
 <script>
+>>>>>>> cbc42fcddd5a52b00891a1532c74b85b56cab39d
 	//The page calls this function when the data has been loaded for the first time.
 	function dataIsREady(){
 		//call Next functions.. to draw visualizations.
-
+		
 		RoundPlacement(allSeasons,document.getElementById("visualization-1"));
+<<<<<<< HEAD
+		makeRivalry(allSeasons, document.getElementById("Rivalry"));
+=======
 		drawVisualTwo(allTeams, document.getElementById("visual_holder_overview"));
 		makeRivalry(allTeams, document.getElementById("Rivalry"));
-
+		
+>>>>>>> cbc42fcddd5a52b00891a1532c74b85b56cab39d
 	}
 
 	//The page calls this function when new filters are selected or changed.
 	function filtersHaveChanged(){
-		//alert("Filters changed. Please redraw your visualization if needed.");
+<<<<<<< HEAD
+		alert("Filters changed. Please redraw your visualization if needed.");
 
+	}
+
+
+  </script>
+
+<script type="text/javascript">
+=======
+		//alert("Filters changed. Please redraw your visualization if needed.");
+		
 		drawVisualTwo(allTeams, document.getElementById("visual_holder_overview"));
 	}
 </script>
-
-<script type="text/javascript">
+<script>
+>>>>>>> cbc42fcddd5a52b00891a1532c74b85b56cab39d
 	//Google maps stuff below.
 	var lat=-41.285361,lng=174.778647;
 	var locationName="TSB Bank,Wellington";
@@ -136,8 +182,12 @@
 
 <body>
 	<div id="outerContainer" class="borderSection">
+<<<<<<< HEAD
 		<div id="titleContainer"
 			style="vertical-align: top; display: inline-block;">
+=======
+		<div id="titleContainer" style="vertical-align: top; display: inline-block;">
+>>>>>>> cbc42fcddd5a52b00891a1532c74b85b56cab39d
 			<div style="display: inline-block; vertical-align: top;">
 				<img alt="Logo" src="images/anz_champ_logo.png"
 					style="height: 95px;" />
@@ -171,21 +221,23 @@
 			<div id="canvasArea" class="borderSection"
 				style="width: 65%; height: 600px;">
 				<div id="tabs" style="border: 0px; margin: 6px;">
+<<<<<<< HEAD
 					<ul>
-						<li><a href="#overview">Home VS Away</a></li>
+						<li><a href="#overview">Overview</a></li>
 						<li><a href="#visualization-1">Season Placement</a></li>
-						<!--<li><a href="#visualization-2">Home VS Away</a></li>-->
+						<li><a href="#visualization-2">Home VS Away</a></li>
 						<li><a href="#Rivalry">Rivalry</a></li>
 					</ul>
 					<div id="overview">
-						<p>Red is a loss. Green is a win. The brighter the colour the greater the point difference. <br> The filters are to the right.</p>
+						<p>Overview of All games</p>
 						<svg id="visual_holder_overview"></svg>
 					</div>
 					<div id="visualization-1"></div>
-					<!--<div id="visualization-2">
-						<p>Visualization 2 goes here. Home VS Away games. Red is a loss</p>
-					<svg id="visual_holder"></svg>
-					</div>-->
+					<div id="visualization-2">
+						<p>Visualization 2 goes here. Home VS Away games. Red is a
+							loss, green is a win.</p>
+						<svg id="visual_holder2"></svg>
+					</div>
 					<div id="Rivalry">
 						<svg id="rivalry"></svg>
 					</div>
@@ -199,6 +251,71 @@
 					FILTER OPTIONS</p>
 				<br>
 				<div style="position: relative; top: 0px; right: 4px;">
+					<div class="filterBorder"
+						style="position: relative; top: 0px; float: right; border: 2px; border-style: solid; border-radius: 15px; width: 95%; height: 100px;">
+						<div class="filterBy"
+							style="position: relative; top: 5px; left: 5px;">
+							<div style="">
+								Games <br> <select id="yearFilter"></select>
+							</div>
+							<div style="">
+								<select id="seasonPartFilter">
+									<option value="AllSeasons">All</option>
+									<option value="finalSeason">Final</option>
+									<option value="regularSeason">Regular</option>
+								</select>
+							</div>
+						</div>
+
+					</div>
+					<div class="filterByTeam"
+						style="position: relative; top: 2px; float: right; border: 2px; border-style: solid; border-radius: 15px; width: 95%; height: 100px;">
+						<div class="filterTeam"
+							style="position: relative; top: 5px; left: 5px; width: 200px;">
+							Teams <br> <select id="teamA" onchange="checkTeam(this)">
+								<option value="NZTeam">New Zealand Teams</option>
+								<option value="CentralPulse" selected="selected">Central
+									Pulse</option>
+								<option value="NorthernMystics">Northern Mystics</option>
+								<option value="WaikatobayofPlentyMagic">Waikato Bay of
+									Plenty Magic</option>
+								<option value="Southern Steel">Southern Steel</option>
+								<option value="CanterburyTactix">Canterbury Tactix</option>
+
+								<option value="AussieTeam">Australia Team</option>
+								<option value="NewSouthWhalesSwifts">New South Whales
+									Swifts</option>
+								<option value="AdelaideThunderBirds">Adelaide Thunder
+									Birds</option>
+								<option value="MelbourneVixens">Melbourne Vixens</option>
+								<option value="WestCoastFever">West Coast Fever</option>
+								<option value="QueenslandFirebirds">Queensland
+									Firebirds</option>
+							</select> <br> <label style="text-align: center;">versus</label> <br>
+=======
+				  <ul>
+					<li><a href="#overview">Overview</a></li>
+					<li><a href="#visualization-1">Season Placement</a></li>
+					<li><a href="#visualization-2">Home VS Away</a></li>
+					<li><a href="#Rivalry">Rivalry</a></li>
+				  </ul>
+				  <div id="overview">
+					<p>Overview of All games </p>
+					<svg id="visual_holder_overview"></svg>
+				  </div>
+				  <div id="visualization-1"></div>
+				  <div id="visualization-2">
+					<p>Visualization 2 goes here. Home VS Away games. Red is a loss, green is a win. </p>
+					<svg id="visual_holder"></svg>
+				  </div>
+				  <div id="Rivalry">
+				  </div>
+				</div>
+			</div>
+
+			<div id="filterArea" class="borderSection" style="width: 21%; height: 600px;">
+				<p style = "text-align: center; font-weight: bold; text-decoration: underline;"> FILTER OPTIONS </p><br>
+				<div style = "position: relative; top: 0px; right: 4px;">
 					<!-- Michael's team selector .. -->
 					<div id="circleTeamSelector-div" style="display: block; position:relative; left:6px;">
 						<select id="circleTeamSelector" onchange="filtersHaveChanged()">
@@ -223,35 +340,35 @@
 							<option value="2013">2013</option>
 						</select>
 					</div>
-
+							
 					<div class = "filterByIndividualTeam" id="filterByIndividualTeam" style = "display: none; position:relative;top:0px;float: right; border: 2px; border-style: solid; border-radius: 15px;width:95%;height:100px;">
 						<h3>Filter By Team:</h3>
 					</div>
 					<div class = "filterByTeam" id="filterByTeam" style = "display: none; position:relative;top:2px;float: right; border: 2px; border-style: solid; border-radius: 15px;width:95%;height:300px;">
 						<h3>Advance Filter Options</h3>
-						<div class="filterTeam"
-
+						<div class="filterTeam" style = "position: relative; top: 5px; left: 5px; width:200px;">
+							
 							<div id="teamA"></div>
 							<!--
-								<option value="NZTeam">New Zealand Teams</option>
-								<option value="CentralPulse" selected="selected">Central
-									Pulse</option>
-								<option value="NorthernMystics">Northern Mystics</option>
-								<option value="WaikatobayofPlentyMagic">Waikato Bay of
-									Plenty Magic</option>
-								<option value="Southern Steel">Southern Steel</option>
-								<option value="CanterburyTactix">Canterbury Tactix</option>
+							<select id="teamA" onchange="checkTeam(this)">
+							  <option value="NZTeam">New Zealand Teams</option>
+							  <option value="CentralPulse" selected="selected">Central Pulse</option>
+							  <option value="NorthernMystics">Northern Mystics</option>
+							  <option value="WaikatobayofPlentyMagic">Waikato Bay of Plenty Magic</option>
+							  <option value="Southern Steel">Southern Steel</option>
+							  <option value="CanterburyTactix">Canterbury Tactix</option>
 
-								<option value="AussieTeam">Australia Team</option>
-								<option value="NewSouthWhalesSwifts">New South Whales
-									Swifts</option>
-								<option value="AdelaideThunderBirds">Adelaide Thunder
-									Birds</option>
-								<option value="MelbourneVixens">Melbourne Vixens</option>
-								<option value="WestCoastFever">West Coast Fever</option>
-								<option value="QueenslandFirebirds">Queensland
-									Firebirds</option>
-							</select> <br> <label style="text-align: center;">versus</label> <br>
+							  <option value="AussieTeam">Australia Team</option>
+							  <option value="NewSouthWhalesSwifts">New South Whales Swifts</option>
+							  <option value="AdelaideThunderBirds">Adelaide Thunder Birds</option>
+							  <option value="MelbourneVixens">Melbourne Vixens</option>
+							  <option value="WestCoastFever">West Coast Fever</option>
+							  <option value="QueenslandFirebirds">Queensland Firebirds</option>
+							</select>
+							<br>
+							<label style = "text-align: center;">versus</label>
+							<br>
+>>>>>>> cbc42fcddd5a52b00891a1532c74b85b56cab39d
 							<select id="teamB">
 								<option value="AussieTeam">Australia Team</option>
 								<option value="NewSouthWhalesSwifts" selected="selected">New
@@ -275,10 +392,15 @@
 
 					</div>
 
-					 <!-- <div class = "Teams" style = "position:relative;top:4px;float: right; border: 2px; border-style: solid; border-radius: 15px;width:95%;height:100px;">
+<<<<<<< HEAD
+					<div class="Teams"
 						style="position: relative; top: 4px; float: right; border: 2px; border-style: solid; border-radius: 15px; width: 95%; height: 100px;">
 						<div class="Teamfilter"
 							style="position: relative; top: 5px; left: 5px;"></div>
+=======
+					 <!-- <div class = "Teams" style = "position:relative;top:4px;float: right; border: 2px; border-style: solid; border-radius: 15px;width:95%;height:100px;">
+					  <div class="Teamfilter" style = "position: relative; top: 5px; left: 5px;"></div>
+>>>>>>> cbc42fcddd5a52b00891a1532c74b85b56cab39d
 					</div>
 					 -->
 				</div>
@@ -286,6 +408,28 @@
 		</div>
 
 	</div>
+<<<<<<< HEAD
+	<script type="text/javascript">
+	  /* Make focus team boxes.*/
+
+	  <!-- Function to load team names into array-->
+		var x=document.getElementById("teamB");
+	 function checkTeam(select){
+		  var selectedOption = select.options[select.selectedIndex];
+	/* 	  //alert ("The selected option is " + selectedOption.text);
+		//var nz=document.getElementById("teamA");
+		//var t_name=x.options[0].text;
+		var s=selectedOption.text;
+		for (var i=0;i<=x.length;i++){
+			//if (t_name==selectedOption){
+				if (x.options[i].text==s){
+					alert(x.options[i].text);
+				};
+			//}
+		}*/
+	  }
+	</script>
+=======
 	</div>
 <script>
 $('#tabs').tabs({
@@ -295,5 +439,6 @@ $('#tabs').tabs({
     }
 });
 </script>
+>>>>>>> cbc42fcddd5a52b00891a1532c74b85b56cab39d
 </body>
 </html>
