@@ -10,9 +10,9 @@ var height = 400 - margin[0] - margin[2]; // height
 
 var color = d3.scale.category20();
 
-//X scale will fit all values from data[] within pixels 0-w
+//X scale will fit all values in the domain specified
 var x = d3.scale.linear().domain([1,17]).range([0, width]);
-//Y scale will fit values from 0-10 within pixels h-0 (Note the inverted domain for the y-scale: bigger is up!)
+//Y scale will fit values from 0-10 within pixels(inverted scale)
 var y = d3.scale.linear().domain([10, 1]).range([height, 0]);
 
 //create a line function that can convert data[] into x and y points
@@ -45,8 +45,6 @@ var select = titleDiv.append('div')
 	canvas.selectAll('circle').remove();
 	tmpTeam = netballTeam;
 	tmpYear = showAllYear;
-	//selectA.property('value', showAllYear);
-	//selectB.property('value',netballTeam);
 	update();
 
 });
@@ -172,7 +170,7 @@ var context = canvas.append("svg:g").attr('class', 'focus').append('svg:g')
 
 
 function update() {
-	//This function calculates rank data for each round
+	//Function to calcute rank for reach round
 	if (tmpYear === "All") {
 		var totalData = [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0];
 		var incre = [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0];
@@ -255,9 +253,11 @@ function update() {
 				dataSet.push(arr[1]);
 				dataSet.push(arr[2]);}
 			else {
-				var rrr = season[index];
-				var sss = teamRank([rrr]).filter(function(e) {return e.name === tmpTeam;})[0];
-				if (sss.points > 0) {
+				var q = season[index];
+				var p = teamRank([q])
+					.filter(function(e) {
+						return e.name === tmpTeam;})[0];
+				if (p.points > 0) {
 					dataSet.push(arr[0]);
 					dataSet.push(arr[0]);
 				} else {
@@ -268,16 +268,19 @@ function update() {
 			}
 		} else {
 			if (r === arr[3]) {dataSet.push(arr[3]);}
-			if (r === arr[2]) {dataSet.push(arr[2]); dataSet.push(arr[2]);}
-			if (r === arr[1]) {dataSet.push(arr[2]); dataSet.push(arr[1]); dataSet.push(arr[1]);}
-			if (r === arr[0]) {dataSet.push(arr[2]); dataSet.push(arr[1]); dataSet.push(arr[0]);}
+			if (r === arr[2]) {dataSet.push(arr[2]); 
+			dataSet.push(arr[2]);}
+			if (r === arr[1]) {dataSet.push(arr[2]); 
+			dataSet.push(arr[1]); dataSet.push(arr[1]);}
+			if (r === arr[0]) {dataSet.push(arr[2]);
+			dataSet.push(arr[1]); dataSet.push(arr[0]);}
 		}
 	}
 
 	drawGraph(rData);
 }
 function drawGraph(dataSet){
-	 //Dots are appended to the svg canvas
+	 //Append dots to svg canvas
 	var dot = canvas.selectAll('.dots')
 		.data([dataSet]);//bind data
 	var sd = null;
@@ -295,8 +298,7 @@ function drawGraph(dataSet){
 		console.log(sd);
 		if (t == sd) {
 			d3.select(this).classed('selected', false);
-			sd = null;
-			return;
+			sd = null;return;
 		}
 		sd = t;
 		yearR = d3.select(this).attr('year');
@@ -307,7 +309,7 @@ function drawGraph(dataSet){
 			d3.selectAll('.hovertext')
 				.text(d3.select(this)
 				.attr('team') + " (" + d3.select(this).attr('year')+ ")");
-			//alert(tmpTeam + 'year:' + tmpYear);
+
 			});
 
 	dot.selectAll('path').data(function(d) {return [d];}).enter().append("path")
@@ -367,21 +369,6 @@ var select = filterDiv.append('input')
 	.style('padding','2px')
 	.style('width','200px')
 	.on('click', function(e){update();});
-filterDiv.append('br')
-
-var select = filterDiv.append('input')
-	.attr('type', 'button')
-	.attr('value', 'Reset')
-	.style('padding','2px')
-	.style('width','200px')
-	.on('click', function(e){
-		canvas.selectAll('.area').remove();
-		canvas.selectAll('circle').remove();
-		tmpTeam = netballTeam; tmpYear = showAllYear;
-		selectA.property('value', showAllYear);
-		selectB.property('value',netballTeam);
-
-;});
 
 var select = filterDiv.append('input')
 	.attr('type', 'button')
@@ -392,6 +379,19 @@ var select = filterDiv.append('input')
 		var temp = tmpYear;
 		listYears.forEach(function(e) {tmpYear = e; update();});
 		tmpYear = temp;
+;});
+var select = filterDiv.append('input')
+.attr('type', 'button')
+.attr('value', 'Reset')
+.style('padding','2px')
+.style('width','200px')
+.on('click', function(e){
+	canvas.selectAll('.area').remove();
+	canvas.selectAll('circle').remove();
+	tmpTeam = netballTeam; tmpYear = showAllYear;
+	selectA.property('value', showAllYear);
+	selectB.property('value',netballTeam);
+
 ;});
 
 d3.selectAll('.picker').on('change', function(e){
