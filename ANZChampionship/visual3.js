@@ -60,7 +60,6 @@ filterTeam.append('div')
 	canvas.selectAll('.area').remove();
 	canvas.selectAll('circle').remove();
 	tmpYear = showAllYear;
-	//selectA.property('value', showAllYear);
 	update()
 
 });
@@ -307,8 +306,8 @@ function drawGraph(dataSet){
 	})
 	.on('mouseover', function() {
 			d3.selectAll('.hovertext')
-				.text(d3.select(this)
-				.attr('team') + " (" + d3.select(this).attr('year')+ ")");
+				.text('Team Name:' + d3.select(this)
+				.attr('team') + " (Season: " + d3.select(this).attr('year') +')');
 
 			});
 

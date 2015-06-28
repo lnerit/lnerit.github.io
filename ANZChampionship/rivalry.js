@@ -85,7 +85,6 @@ function updExpl() {
 	//lines.empty();
 
 	var round = years[explYear].rounds[explRound];
-	alert("jestin");
 	round.forEach(function() {
 		var loser = teamList.indexOf(game.home);
 		var winner = teamList.indexOf(game.away);
