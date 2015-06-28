@@ -21,34 +21,14 @@
   <script type="text/javascript" src="script.js"></script>
   <script type="text/javascript" src="visual2.js"></script>
   <script type="text/javascript" src="visual3.js"></script>
-    <script type="text/javascript" src="rivalry.js"></script>
+  <script type="text/javascript" src="rivalry.js"></script>
 
 
 	<script>
     //This fucntion runs when the page is ready...
 	$( document ).ready(function() {
 		$( "#tabs" ).tabs();		//make the tabbed content into tabs.
-		 var $tabs = $("#tabs").tabs();
-		 var selected = $tabs.tabs('href', 'selected');
-
-	        // Run a switch on that selected tab and do what you need depending
-	        // on which tab was selected.
-	        switch(selected){
-	            case 0:
-	            	alert(selected);
-	              break;
-	            case 1:
-	            	alert(selected);
-	              break;
-	            case 2:
-	            	alert(selected);
-	            	break;
-	            case 3:
-	            	alert(selected);
-	              break;
-	        }   
-		//LoadYearToFilterBox();		// load years into filter box.
-
+		
 		//attach eventHandlers a function which clears the left-side-bar everytime the tabs are changed.
 		$( "#tabs" ).on( "tabsactivate", function( event, ui ) {
 			$('#info-01').html("");
@@ -57,33 +37,75 @@
 			$('#info-04').html("");
 			$('#info-05').html("");
 			$('#info-06').html("");
+		
+			// Run a switch on that selected tab and do what you need depending
+	        // on which tab was selected.
+			console.log("Switching to tab: "+ JSON.stringify(ui.newPanel.attr('id')));
+			switch (ui.newPanel.attr('id')) {
+				//When switching to overview tab.. this code is run... 
+				case "overview":
+					//Show this.
+					$("#circleTeamSelector-div").css('display', 'block');
+					//Hide this. 
+					$("#filterByIndividualTeam").css('display', 'none');
+					$("#filterByTeam").css('display', 'none');
+					break;
+				
+				//When switching to visualization-1 this code is run... 
+				case "visualization-1":
+					//Show this.
+					$("#filterByIndividualTeam").css('display', 'block');
+					$("#filterByTeam").css('display', 'block');
+					//Hide this. 
+					$("#circleTeamSelector-div").css('display', 'none');
+					break;
+				
+				//When switching to visualization-2 this code is run... 
+				case "visualization-2":
+					//code here. 
+					break;
+				
+				//When switching to rivalry tabs this code is run... 
+				case "Rivalry":
+					//code here. 
+					break;
+				
+				//If none of the other code is run then this code is run. 
+				default:
+					console.log("No actions defined for this tab switch. (default case)");
+			}
+			
 		} );
 		//attach eventHandlers to call function to redraw visulizations with new filters.
-		$('#teamA').on("change", function (event){filtersHaveChanged();});
-		$('#teamB').on("change", function (event){filtersHaveChanged();});
-		$('#yearFilter').on("change", function (event){filtersHaveChanged();});
-		$('#seasonPartFilter').on("change", function (event){filtersHaveChanged();});
+		//$('#teamA').on("change", function (event){filtersHaveChanged();});
+		///$('#teamB').on("change", function (event){filtersHaveChanged();});
+		//$('#yearFilter').on("change", function (event){filtersHaveChanged();});
+		//$('#seasonPartFilter').on("change", function (event){filtersHaveChanged();});
+		
+		$('#circleTeamSelector').onchange = filtersHaveChanged();
 
 	});
-	$('#tabs').tabs({
-		  select: function(event,ui) {
-		     alert('selected: '+ui.index);
-		  }
-		});
+	
+	
+	
 </script>
 
 <script>
 	//The page calls this function when the data has been loaded for the first time.
 	function dataIsREady(){
-		//call Next functions.. to draw visualization 2.
-		makeVisualizationTwo(allTeams, document.getElementById("visual_holder_overview"));
+		//call Next functions.. to draw visualizations.
+		
 		RoundPlacement(allSeasons,document.getElementById("visualization-1"));
-		makeRivalry(allTeams, document.getElementById("Rivalry"))
+		drawVisualTwo(allTeams, document.getElementById("visual_holder_overview"));
+		makeRivalry(allTeams, document.getElementById("Rivalry"));
+		
 	}
 
 	//The page calls this function when new filters are selected or changed.
 	function filtersHaveChanged(){
 		//alert("Filters changed. Please redraw your visualization if needed.");
+		//alert("change");
+		drawVisualTwo(allTeams, document.getElementById("visual_holder_overview"));
 	}
 </script>
 <script>
@@ -158,12 +180,29 @@
 			<div id="filterArea" class="borderSection" style="width: 21%; height: 600px;">
 				<p style = "text-align: center; font-weight: bold; text-decoration: underline;"> FILTER OPTIONS </p><br>
 				<div style = "position: relative; top: 0px; right: 4px;">
+					<!-- Michael's team selector .. -->
+					<div id="circleTeamSelector-div" style="display: none;">
+								<select id="circleTeamSelector" onchange="filtersHaveChanged();">
+									<option value="Adelaide Thunderbirds">Adelaide Thunderbirds</option>
+									<option value="Canterbury Tactix">Canterbury Tactix</option>
+									<option value="Central Pulse">Central Pulse</option>
+									<option value="Melbourne Vixens">Melbourne Vixens</option>
+									<option value="New South Wales Swifts">New South Wales Swifts</option>
+									<option value="Northern Mystics" selected>Northern Mystics</option>
+									<option value="Queensland Firebirds">Queensland Firebirds</option>
+									<option value="Southern Steel">Southern Steel</option>
+									<option value="Waikato Bay of Plenty Magic">Waikato Bay of Plenty Magic</option>
+									<option value="West Coast Fever">West Coast Fever</option>
+								</select>
+							</div>
+							
 					<div class = "filterByIndividualTeam" id="filterByIndividualTeam" style = "position:relative;top:0px;float: right; border: 2px; border-style: solid; border-radius: 15px;width:95%;height:100px;">
 						<h3>Filter By Team:</h3>
 					</div>
 					<div class = "filterByTeam" id="filterByTeam" style = "position:relative;top:2px;float: right; border: 2px; border-style: solid; border-radius: 15px;width:95%;height:300px;">
 						<h3>Advance Filter Options</h3>
 						<div class="filterTeam" style = "position: relative; top: 5px; left: 5px; width:200px;">
+							
 							<div id="teamA"></div>
 							<!--
 							<select id="teamA" onchange="checkTeam(this)">

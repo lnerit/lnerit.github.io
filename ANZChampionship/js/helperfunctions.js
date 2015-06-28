@@ -46,7 +46,7 @@ function teamRank(dat){
 		data.push(new TeamData(teamList[i]));
 	}
 	dat.forEach(function(d) {
-		console.log(d.Date)
+		//console.log(d.Date)
 		if (d.Date.indexOf('BYES:') === 0) return;
 		var scoreHome = parseInt(d.Score.split('–')[0], 10);
 		var scoreAway = parseInt(d.Score.split('–')[1], 10);

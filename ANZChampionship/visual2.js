@@ -16,6 +16,31 @@ function mouseOverCircle(gameRepresentedByCircle){
    $('#info-06').html("");
 }
 
+var focusTeam = "";
+
+function makeFilterSpace(){
+	//Show this.
+	$("#circleTeamSelector-div").css('display', 'block');
+	//Hide these. 
+	$("#filterByIndividualTeam").css('display', 'none');
+	$("#filterByTeam").css('display', 'none');
+	
+}
+
+
+function drawVisualTwo(theData, svg){
+	//empty svg
+	$("#visual_holder_overview").html("")
+	//overwrite value from above.
+	makeFilterSpace(); //setupfilter section.. 
+	focusTeam = $("#circleTeamSelector").val();
+	if(theData[focusTeam] == undefined) { 
+		alert(focusTeam + "is an invalid selection."); return;
+	}
+	var gameSet = theData[focusTeam];
+	makeVisualizationTwo(gameSet, svg)
+}
+
 var configOptions = {
 	verticalOffsetLabel: -20,
 	gravity: 0.21,
@@ -24,14 +49,12 @@ var configOptions = {
 	colours: [d3.rgb(255,0,0), d3.rgb(90,0,0),d3.rgb(0,90,0), d3.rgb(0,255,0)]
 };
 
-//global to debugge
-var gameSet;
 
-function makeVisualizationTwo(theData, svg){
+function makeVisualizationTwo(gameSet, svg){
 	//Sanity Check.... got data.. got d3?
-	if(theData == undefined || svg == undefined){
-		alert("No data or svg in makeVisualizationTwo."+ svg + theData);
-		return "No data or svg in makeVisualizationTwo.";
+	if(gameSet == undefined || svg == undefined){
+		alert("No gameSet or svg in makeVisualizationTwo."+ svg + gameSet);
+		return "No gameSet or svg in makeVisualizationTwo.";
 	}
 	if(d3 == undefined){		//d3 available. notify and get out if its not available.
 		alert("No d3 object.");
@@ -39,13 +62,9 @@ function makeVisualizationTwo(theData, svg){
 	}
 
 	//Get focus team from teamSelector. teamA.
-	var focusTeam = document.getElementById("teamA").value;
 	var visualizationHeight = 445;
 	var visualizationWidth = 610;
 
-	//overwrite value from above.
-	focusTeam = "Southern Steel";
-	 gameSet = theData[focusTeam];
 	//Storage for various indexes. These are used to tie the force directed layout together. 
 	var indexes = {home : {win: 0, loss:0},
 		       away : {win: 0, loss:0}
@@ -134,17 +153,23 @@ function makeVisualizationTwo(theData, svg){
 		    .interpolate(d3.interpolateRgb)
 		    .range(configOptions.colours);
 		
-	//set of circles ...
+	//set of circles ... add new ones... remove old.. update all.
 	var circles = svgElem.selectAll("circle")
 		.data(gameSet)
 		.enter()
-		.append("circle")
+		.append("circle");
+	
+	
+	
+	circles = svgElem.selectAll("circle")
 		.attr("r",10)
 		.attr("fill", function(game,i){
 					return (colorScale(game.pointsDifference));
 		})
 		.on('mouseover', function(d) {mouseOverCircle(d);});
 
+	
+	
 	//set of labels.
 	var labels = svgElem.selectAll("text")
 		.data([{lbl: "Home!"},
