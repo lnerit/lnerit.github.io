@@ -72,8 +72,8 @@ function dispExpl() {
         drawSeg(svg, con.h, i, tColor, teamName);
 	}
 
-	//document.getElementById("rivalry").innerHTML += "<ul id='yearSel'><li class='yearBut' onClick='explYear=0;updExpl();'>2008</li><li class='yearBut' onClick='explYear=1;updExpl();'>2009</li><li class='yearBut' onClick='explYear=2;updExpl();'>2010</li><li class='yearBut' onClick='explYear=3;updExpl();'>2011</li><li class='yearBut' onClick='explYear=4;updExpl();'>2012</li><li class='yearBut' onClick='explYear=5;updExpl();'>2013</li></ul>";
-	//document.getElementById("rivalry").innerHTML += "<ul id='roundSel'><li class='roundBut' onClick='explRound=1;updExpl();'>1</li><li class='roundBut' onClick='explRound=2;updExpl();'>2</li><li class='roundBut' onClick='explRound=3;updExpl();'>3</li><li class='roundBut' onClick='explRound=4;updExpl();'>4</li><li class='roundBut' onClick='explRound=5;updExpl();'>5</li><li class='roundBut' onClick='explRound=6;updExpl();'>6</li><li class='roundBut' onClick='explRound=7;updExpl();'>7</li><li class='roundBut' onClick='explRound=8;updExpl();'>8</li><li class='roundBut' onClick='explRound=9;updExpl();'>9</li><li class='roundBut' onClick='explRound=10;updExpl();'>10</li><li class='roundBut' onClick='explRound=11;updExpl();'>11</li><li class='roundBut' onClick='explRound=12;updExpl();'>12</li><li class='roundBut' onClick='explRound=13;updExpl();'>13</li><li class='roundBut' onClick='explRound=14;updExpl();'>14</li><li class='roundBut' onClick='explRound=15;updExpl();'>15</li><li class='roundBut' onClick='explRound=16;updExpl();'>16</li><li class='roundBut' onClick='explRound=17;updExpl();'>17</li></ul>";
+	document.getElementById("rivalry").innerHTML += "<ul id='yearSel'><li class='yearBut' onClick='explYear=0;updExpl();'>2008</li><li class='yearBut' onClick='explYear=1;updExpl();'>2009</li><li class='yearBut' onClick='explYear=2;updExpl();'>2010</li><li class='yearBut' onClick='explYear=3;updExpl();'>2011</li><li class='yearBut' onClick='explYear=4;updExpl();'>2012</li><li class='yearBut' onClick='explYear=5;updExpl();'>2013</li></ul>";
+	document.getElementById("rivalry").innerHTML += "<ul id='roundSel'><li class='roundBut' onClick='explRound=1;updExpl();'>1</li><li class='roundBut' onClick='explRound=2;updExpl();'>2</li><li class='roundBut' onClick='explRound=3;updExpl();'>3</li><li class='roundBut' onClick='explRound=4;updExpl();'>4</li><li class='roundBut' onClick='explRound=5;updExpl();'>5</li><li class='roundBut' onClick='explRound=6;updExpl();'>6</li><li class='roundBut' onClick='explRound=7;updExpl();'>7</li><li class='roundBut' onClick='explRound=8;updExpl();'>8</li><li class='roundBut' onClick='explRound=9;updExpl();'>9</li><li class='roundBut' onClick='explRound=10;updExpl();'>10</li><li class='roundBut' onClick='explRound=11;updExpl();'>11</li><li class='roundBut' onClick='explRound=12;updExpl();'>12</li><li class='roundBut' onClick='explRound=13;updExpl();'>13</li><li class='roundBut' onClick='explRound=14;updExpl();'>14</li><li class='roundBut' onClick='explRound=15;updExpl();'>15</li><li class='roundBut' onClick='explRound=16;updExpl();'>16</li><li class='roundBut' onClick='explRound=17;updExpl();'>17</li></ul>";
 
 	updExpl();
 
@@ -83,20 +83,22 @@ function updExpl() {
 	var lines = d3.select("#explLines");
 	d3.selectAll(".gameLine").remove();
 	//lines.empty();
+	//alert("Welcome to ANZ Netball Championship Visualiser!!!");
+	//var round = years[explYear].rounds[explRound];
+	drawGameLine(lines, 2, 3);
+	drawGameLine(lines, 1, 5);
 
-	var round = years[explYear].rounds[explRound];
-	alert("jestin");
-	round.forEach(function() {
-		var loser = teamList.indexOf(game.home);
-		var winner = teamList.indexOf(game.away);
-		if (game.homePts > game.awayPts) {
-			var t = loser;
-			loser = winner;
-			winner = t;
-		}
-		;
-		drawGameLine(lines, loser, winner);
-	});
+//	round.forEach(function() {
+//		var loser = teamList.indexOf(game.home);
+//		var winner = teamList.indexOf(game.away);
+//		if (game.homePts > game.awayPts) {
+//			var t = loser;
+//			loser = winner;
+//			winner = t;
+//		}
+//		;
+//		drawGameLine(lines, loser, winner);
+//	});
 }
 
 function drawGameLine(lines, loser, winner) {
