@@ -104,7 +104,7 @@
 	//The page calls this function when new filters are selected or changed.
 	function filtersHaveChanged(){
 		//alert("Filters changed. Please redraw your visualization if needed.");
-		//alert("change");
+		
 		drawVisualTwo(allTeams, document.getElementById("visual_holder_overview"));
 	}
 </script>
@@ -182,13 +182,13 @@
 				<div style = "position: relative; top: 0px; right: 4px;">
 					<!-- Michael's team selector .. -->
 					<div id="circleTeamSelector-div" style="display: none;">
-								<select id="circleTeamSelector" onchange="filtersHaveChanged();">
+								<select id="circleTeamSelector" onchange="filtersHaveChanged()">
 									<option value="Adelaide Thunderbirds">Adelaide Thunderbirds</option>
 									<option value="Canterbury Tactix">Canterbury Tactix</option>
 									<option value="Central Pulse">Central Pulse</option>
 									<option value="Melbourne Vixens">Melbourne Vixens</option>
 									<option value="New South Wales Swifts">New South Wales Swifts</option>
-									<option value="Northern Mystics" selected>Northern Mystics</option>
+									<option value="Northern Mystics" selected="selected">Northern Mystics</option>
 									<option value="Queensland Firebirds">Queensland Firebirds</option>
 									<option value="Southern Steel">Southern Steel</option>
 									<option value="Waikato Bay of Plenty Magic">Waikato Bay of Plenty Magic</option>
