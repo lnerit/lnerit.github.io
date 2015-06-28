@@ -68,7 +68,7 @@ function dispExpl() {
 		var teamName = teamList[i];
         var tColor = teamColor[i];
 
-        drawSeg(svg, con.h, i, team.color, teamName);
+        drawSeg(svg, con.h, i, tColor, teamName);
 	}
 
 	document.getElementById("rivalry").innerHTML += "<ul id='yearSel'><li class='yearBut' onClick='explYear=0;updExpl();'>2008</li><li class='yearBut' onClick='explYear=1;updExpl();'>2009</li><li class='yearBut' onClick='explYear=2;updExpl();'>2010</li><li class='yearBut' onClick='explYear=3;updExpl();'>2011</li><li class='yearBut' onClick='explYear=4;updExpl();'>2012</li><li class='yearBut' onClick='explYear=5;updExpl();'>2013</li></ul>";
