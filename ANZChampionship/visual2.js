@@ -47,11 +47,12 @@ function drawVisualTwo(theData, svg){
 }
 
 var configOptions = {
-	verticalOffsetLabel: -20,
-	gravity: 0.21,
-	linkDistance: 10,
-	circleRepelFactor: -140,
-	colours: [d3.rgb(255,0,0), d3.rgb(90,0,0),d3.rgb(0,90,0), d3.rgb(0,255,0)]
+	verticalOffsetLabel: -25,
+	gravity: 0.35,
+	linkDistance: 13,
+	circleRepelFactor: -330,
+	colours: [d3.rgb(255,0,0), d3.rgb(90,0,0),d3.rgb(0,90,0), d3.rgb(0,255,0)],
+	rad: 14
 };
 
 
@@ -67,8 +68,8 @@ function makeVisualizationTwo(gameSet, svg){
 	}
 
 	//Get focus team from teamSelector. teamA.
-	var visualizationHeight = 445;
-	var visualizationWidth = 610;
+	var visualizationHeight = 490;
+	var visualizationWidth = 615;
 
 	//Storage for various indexes. These are used to tie the force directed layout together. 
 	var indexes = {home : {win: 0, loss:0},
@@ -167,7 +168,7 @@ function makeVisualizationTwo(gameSet, svg){
 	
 	
 	circles = svgElem.selectAll("circle")
-		.attr("r",10)
+		.attr("r",configOptions.rad)
 		.attr("fill", function(game,i){
 					return (colorScale(game.pointsDifference));
 		})
