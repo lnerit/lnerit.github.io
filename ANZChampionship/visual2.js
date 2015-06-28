@@ -12,33 +12,38 @@ function mouseOverCircle(gameRepresentedByCircle){
    $('#info-02').html("Away: "+gameRepresentedByCircle['Away Team']);
    $('#info-03').html("Score: "+gameRepresentedByCircle['Score']);
    $('#info-04').html("Venue: "+gameRepresentedByCircle['Venue']);
-   $('#info-05').html("");
+   $('#info-05').html("Year: "+gameRepresentedByCircle['year']);
    $('#info-06').html("");
 }
 
 var focusTeam = "";
 
-function makeFilterSpace(){
-	//Show this.
-	$("#circleTeamSelector-div").css('display', 'block');
-	//Hide these. 
-	$("#filterByIndividualTeam").css('display', 'none');
-	$("#filterByTeam").css('display', 'none');
-	
-}
-
-
 function drawVisualTwo(theData, svg){
 	//empty svg
 	$("#visual_holder_overview").html("")
 	//overwrite value from above.
-	makeFilterSpace(); //setupfilter section.. 
 	focusTeam = $("#circleTeamSelector").val();
 	if(theData[focusTeam] == undefined) { 
-		alert(focusTeam + "is an invalid selection."); return;
+		//alert(focusTeam + "is an invalid selection.");
+		return;
 	}
 	var gameSet = theData[focusTeam];
-	makeVisualizationTwo(gameSet, svg)
+	var gameSetAdjusted = [];
+	
+	//get circleYearSelector
+	var year=$("#circleYearSelector").val();
+	//remove all games that don't match the year.
+	if(year != "All"){
+		for(var i = gameSet.length - 1; i >= 0; i--) {
+			if(gameSet[i].year == year) {
+			   gameSetAdjusted.push(gameSet[i]);
+			}
+		}
+	}else{
+		gameSetAdjusted = gameSet;
+	}
+	console.log(JSON.stringify(gameSetAdjusted));
+	makeVisualizationTwo(gameSetAdjusted, svg);
 }
 
 var configOptions = {
