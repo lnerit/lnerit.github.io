@@ -6,6 +6,12 @@
   border-radius: 15px;
   vertical-align: top;
 }
+#outerContainer {
+    margin-left: auto;
+    margin-right: auto;
+    width: 1000px;
+    border: 1px solid;
+}
  teamA {
        white-space: pre;
   }
@@ -190,64 +196,25 @@ g.opt.selected{
 .line.selected {
 	opacity:0.2;
 }
+select {
+        resize: horizontal;
+        width: 200px;
+    }
+input {
+        resize: horizontal;
+        width: 100px;
+        background-position: -50px 0;
+    }
+
+    input:active {
+        width: auto;   
+    }
+
+    input:focus {
+        min-width: 100px;
+    }
 
 
-
-
-  #navcontainer
-  {
-  background: #f0e7d7;
-  width: 30%;
-  margin: 0 auto;
-  padding: 1em 0;
-  font-family: georgia, serif;
-  font-size: 13px;
-  text-align: center;
-  text-transform: lowercase;
-  }
-
-  ul#navlist
-  {
-  text-align: left;
-  list-style: none;
-  padding: 0;
-  margin: 0 auto;
-  width: 70%;
-  }
-
-  ul#navlist li
-  {
-  display: block;
-  margin: 0;
-  padding: 0;
-  }
-
-  ul#navlist li a
-  {
-  display: block;
-  width: 100%;
-  padding: 0.5em 0 0.5em 2em;
-  border-width: 1px;
-  border-color: #ffe #aaab9c #ccc #fff;
-  border-style: solid;
-  color: #777;
-  text-decoration: none;
-  background: #f7f2ea;
-  }
-
-  #navcontainer>ul#navlist li a { width: auto; }
-
-  ul#navlist li#active a
-  {
-  background: #f0e7d7;
-  color: #800000;
-  }
-
-  ul#navlist li a:hover, ul#navlist li#active a:hover
-  {
-  color: #800000;
-  background: transparent;
-  border-color: #aaab9c #fff #fff #ccc;
-  }
+ 
 
 

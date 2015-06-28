@@ -1,10 +1,12 @@
 //function to display Season/Round Placements
-var callFunction;
+
 function RoundPlacement(theData, svg){
+	$("#visualization-1").html("")
+	$("#Rivalry").html("")
 //define dimensions of svg canvas
 var margin = [40, 40, 60, 40]; // margins
-var width = 600 - margin[1] - margin[3]; // width
-var height = 500 - margin[0] - margin[2]; // height
+var width = 500 - margin[1] - margin[3]; // width
+var height = 400 - margin[0] - margin[2]; // height
 
 var color = d3.scale.category20();
 
@@ -15,7 +17,7 @@ var y = d3.scale.linear().domain([10, 1]).range([height, 0]);
 
 //create a line function that can convert data[] into x and y points
 var line = d3.svg.line()
-//plot line graph on the data points
+//plot line canvas on the data points
 .x(function(d,i) {
 	return x(i+1);
 })
@@ -27,8 +29,6 @@ var tmpTeam = netballTeam;
 tmpYear = showAllYear;
 
 // Add an SVG element with the desired dimensions and margin.
-
-
 var titleDiv = d3.select('#filterByIndividualTeam')
 	.append('div')
 	.attr('class','removeTitle')
@@ -41,12 +41,12 @@ var select = titleDiv.append('div')
 	.attr('id','removeTitle')
 	.on('change', function(e){netballTeam = this.value;d3.select('#teamA')
 
-	graph.selectAll('.area').remove();
-	graph.selectAll('circle').remove();
+	canvas.selectAll('.area').remove();
+	canvas.selectAll('circle').remove();
 	tmpTeam = netballTeam;
 	tmpYear = showAllYear;
-	selectA.property('value', showAllYear);
-	selectB.property('value',netballTeam);
+	//selectA.property('value', showAllYear);
+	//selectB.property('value',netballTeam);
 	update();
 
 });
@@ -59,8 +59,8 @@ filterTeam.append('div')
 	.style('left','5px')
 	.on('change', function(e){tmpYear = this.value;d3.select('#teamA')
 
-	graph.selectAll('.area').remove();
-	graph.selectAll('circle').remove();
+	canvas.selectAll('.area').remove();
+	canvas.selectAll('circle').remove();
 	tmpYear = showAllYear;
 	//selectA.property('value', showAllYear);
 	update()
@@ -77,11 +77,15 @@ select.selectAll('option')
 select.property('value', netballTeam);
 var other = select;
 
+titleDiv.append('p').attr('class', 'hovertext').text('--');
+
+
 //Add an SVG element with the desired dimensions and margin.
-var graph = d3.select(svg)
+var canvas = d3.select(svg)
 	.append('div')
 	.attr('class','remove')
 	.style('text-align','center')
+	.style('float','left')
 	.append("svg:svg")
 	.style('text-align','center')
 .attr("width", width + margin[1] + margin[3])
@@ -92,7 +96,7 @@ var graph = d3.select(svg)
 //create y-Axis
 var xAxis = d3.svg.axis().scale(x).ticks(17).tickSize(-15);
 //Add the x-axis.
-graph.append("svg:g").append("svg:g").attr('class', 'focus').append('svg:g')
+canvas.append("svg:g").append("svg:g").attr('class', 'focus').append('svg:g')
 .attr("class", "x axis")
 .attr("transform", "translate(" + 0 +"," + (height + 15) + ")")
 .call(xAxis).append("text")
@@ -103,7 +107,7 @@ graph.append("svg:g").append("svg:g").attr('class', 'focus').append('svg:g')
 .text("Round").style('font-weight', 'bold');
 
 //Rectangle for initial season
-graph.append('rect').attr('x', x(1)).attr('y',0)
+canvas.append('rect').attr('x', x(1)).attr('y',0)
 .attr('width', 2.5*width/5.7).attr('height', height)
 .style('fill', 'yellow').style('opacity', '0.5')
 .attr("transform", "translate(" + x + "," + y + ")")
@@ -111,7 +115,7 @@ graph.append('rect').attr('x', x(1)).attr('y',0)
 		var s = d3.select(this);
 		s.style('fill', 'grey');} )
 .on('mouseout', function(e) {var s = d3.select(this); s.style('fill', 'lightblue');});
-graph.append('svg:g')
+canvas.append('svg:g')
 	.append('svg:text')
 	.attr('class','temp')
 	.text('1st Half')
@@ -119,7 +123,7 @@ graph.append('svg:g')
 	.attr('x',x(1)).attr('y', y(9.5));
 
 //Mid season rectangle
-graph.append('rect').attr('x', x(8)).attr('y',0)
+canvas.append('rect').attr('x', x(8)).attr('y',0)
 .attr('width', 2.5*width/6.6).attr('height', height)
 .style('fill', 'yellow').style('opacity', '0.5')
 .attr("transform", "translate(" + x + "," + y + ")")
@@ -127,7 +131,7 @@ graph.append('rect').attr('x', x(8)).attr('y',0)
 		var s = d3.select(this);
 		s.style('fill', 'orange');} )
 .on('mouseout', function(e) {var s = d3.select(this); s.style('fill', 'lightblue');});
-graph.append('svg:g')
+canvas.append('svg:g')
 	.append('svg:text')
 	.attr('class','temp')
 	.text('2nd Half')
@@ -135,7 +139,7 @@ graph.append('svg:g')
 	.attr('x',x(9)).attr('y', y(9.5));
 
 //Rectangle for final season
-graph.append('rect').attr('x', x(14.0)).attr('y',0)
+canvas.append('rect').attr('x', x(14.0)).attr('y',0)
 .attr('width', 2.5*width/12.7).attr('height', height)
 .style('fill', 'lightblue').style('opacity', '0.5')
 .on('mouseover', function(e) {
@@ -145,7 +149,7 @@ graph.append('rect').attr('x', x(14.0)).attr('y',0)
 	var s = d3.select(this);
 	s.style('fill', 'green');
 	});
-graph.append('svg:g')
+canvas.append('svg:g')
 	.append('svg:text')
 	.attr('class','temp')
 	.text('Final Season')
@@ -155,7 +159,7 @@ graph.append('svg:g')
 //create left y-Axis
 var yAxisLeft = d3.svg.axis().scale(y).orient("left").tickSize(-width).tickSubdivide(true);
 //Add the y-axis to the left
-var context = graph.append("svg:g").attr('class', 'focus').append('svg:g')
+var context = canvas.append("svg:g").attr('class', 'focus').append('svg:g')
 .attr("class", "y axis")
 .attr("transform", "translate(0,0)")
 .call(yAxisLeft)
@@ -274,12 +278,12 @@ function update() {
 }
 function drawGraph(dataSet){
 	 //Dots are appended to the svg canvas
-	var ctx = graph.selectAll('.dots')
+	var dot = canvas.selectAll('.dots')
 		.data([dataSet]);//bind data
 	var sd = null;
 	var yearR = null;
 
-	ctx.enter().append('g')
+	dot.enter().append('g')
 		.attr('class', 'line')
 		.attr('team',tmpTeam)
 		.attr('year',tmpYear)
@@ -305,25 +309,8 @@ function drawGraph(dataSet){
 				.attr('team') + " (" + d3.select(this).attr('year')+ ")");
 			//alert(tmpTeam + 'year:' + tmpYear);
 			});
-		/*.on('mouseout', function() {
-			if (toReview == null) {
-				d3.selectAll('.hovertext').text('Click a line for more options. Right click to delete a single line.'); return;
-			}
-			d3.selectAll('.hovertext').html('<span id="span1" class="hovered"> See Rivalry With This Team </span> ' + toReview + " (" + yearR + ") <span id='span2' class='hovered'> Switch To This Team </span>");
-			d3.selectAll('#span1').on('click', function(e) {if (netballTeam == toReview) {alert("You can't have a rivalry with yourself."); return;}rival1 = netballTeam; rival2 = toReview; switchTo('rival');}).style('margin-right','50px').style('color','green').style('text-decoration','underline');
-			d3.selectAll('#span2').on('click', function(e) {
-				netballTeam = toReview;
-				//graph.selectAll('.area').remove();
-				//graph.selectAll('circle').remove();
-				tmpTeam = netballTeam; selectB.property('value',netballTeam); update();
-				other.property('value', netballTeam);
-				d3.selectAll('#teamname').html(netballTeam);
 
-			}).style('margin-left', '50px').style('color','red').style('text-decoration', 'underline');
-		});
-	*/
-
-	ctx.selectAll('path').data(function(d) {return [d];}).enter().append("path")
+	dot.selectAll('path').data(function(d) {return [d];}).enter().append("path")
 	.attr("class", "area")
 	.style('stroke', function(d) {if (tmpTeam == netballTeam && tmpYear == showAllYear) return 'black';return color(tmpTeam + "" + tmpYear);}).style('stroke-width', '4').style('fill', 'none')
 	.transition()
@@ -337,9 +324,9 @@ function drawGraph(dataSet){
 		};
 	});
 
-	ctx.on('contextmenu', function(data, index) {console.log(this);d3.event.preventDefault();d3.select(this).remove();});
+	dot.on('contextmenu', function(data, index) {console.log(this);d3.event.preventDefault();d3.select(this).remove();});
 
-	var circ = ctx.selectAll('circle').data(dataSet)
+	var circ = dot.selectAll('circle').data(dataSet)
 	.enter().append('circle').transition().delay(200)
 	.attr('cx', function (d, i) { return x(i+1); })
 	.attr('cy', function (d) { return y(d); })
@@ -388,8 +375,8 @@ var select = filterDiv.append('input')
 	.style('padding','2px')
 	.style('width','200px')
 	.on('click', function(e){
-		graph.selectAll('.area').remove();
-		graph.selectAll('circle').remove();
+		canvas.selectAll('.area').remove();
+		canvas.selectAll('circle').remove();
 		tmpTeam = netballTeam; tmpYear = showAllYear;
 		selectA.property('value', showAllYear);
 		selectB.property('value',netballTeam);
@@ -408,8 +395,10 @@ var select = filterDiv.append('input')
 ;});
 
 d3.selectAll('.picker').on('change', function(e){
-	graph.selectAll('.area').remove();
-	graph.selectAll('circle').remove();
+	canvas.selectAll('.area').remove();
+	canvas.selectAll('circle').remove();
 tmpTeam = netballTeam; tmpYear = showAllYear; selectA.property('value', showAllYear); selectB.property('value',netballTeam); update();});
 }
+
+
 
