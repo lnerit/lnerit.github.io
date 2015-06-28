@@ -21,9 +21,11 @@ function startTest() {
     loadTeams();
 }
 
-function makeRivalry(theData, svg) {
+var svg;
+function makeRivalry(theData, svgt) {
+	svg = svgt;
 	// Sanity Check.... got data.. got d3?
-	if(theData == undefined || svg == undefined){
+	/*if(theData == undefined || svg == undefined){
 		alert("No data or svg in makeVisualizationTwo."+ svg + theData);
 		return "No data or svg in makeVisualizationTwo.";
 	   }
@@ -31,7 +33,7 @@ function makeRivalry(theData, svg) {
 		// available.
 		alert("No d3 object.");
 		return "No d3 object.";
-	}
+	}*/
 
 	startTest();
 	loadTeams(teamList);

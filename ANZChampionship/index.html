@@ -16,7 +16,7 @@
 <script type="text/javascript" src="js/jquery-1.9.1.js"></script>
 <script type="text/javascript" src="js/jquery-ui.js"></script>
   <script type="text/javascript" src="js/helperfunctions.js"></script>
-    <script type="text/javascript" src="js/helperfunctions.js"></script>
+
 
 <script type="text/javascript" src="js/d3.min.js"></script>
 <script type="text/javascript" src="js/moment.min.js">
@@ -41,74 +41,74 @@
 			$('#info-04').html("");
 			$('#info-05').html("");
 			$('#info-06').html("");
-		
+
 			// Run a switch on that selected tab and do what you need depending
 	        // on which tab was selected.
 			console.log("Switching to tab: "+ JSON.stringify(ui.newPanel.attr('id')));
 			switch (ui.newPanel.attr('id')) {
-				//When switching to overview tab.. this code is run... 
+				//When switching to overview tab.. this code is run...
 				case "overview":
 					//Show this.
 					$("#circleTeamSelector-div").css('display', 'block');
-					//Hide this. 
+					//Hide this.
 					$("#filterByIndividualTeam").css('display', 'none');
 					$("#filterByTeam").css('display', 'none');
 					break;
-				
-				//When switching to visualization-1 this code is run... 
+
+				//When switching to visualization-1 this code is run...
 				case "visualization-1":
 					//Show this.
 					$("#filterByIndividualTeam").css('display', 'block');
 					$("#filterByTeam").css('display', 'block');
-					//Hide this. 
+					//Hide this.
 					$("#circleTeamSelector-div").css('display', 'none');
 					break;
-				
-				//When switching to visualization-2 this code is run... 
+
+				//When switching to visualization-2 this code is run...
 				case "visualization-2":
-					//code here. 
+					//code here.
 					break;
-				
-				//When switching to rivalry tabs this code is run... 
-				case "Rivalry":
-					//code here. 
+
+				//When switching to rivalry tabs this code is run...
+				case "rivalry-div":
+					//code here.
 					break;
-				
-				//If none of the other code is run then this code is run. 
+
+				//If none of the other code is run then this code is run.
 				default:
 					console.log("No actions defined for this tab switch. (default case)");
 			}
-			
+
 		} );
 		//attach eventHandlers to call function to redraw visulizations with new filters.
 		//$('#teamA').on("change", function (event){filtersHaveChanged();});
 		///$('#teamB').on("change", function (event){filtersHaveChanged();});
 		//$('#yearFilter').on("change", function (event){filtersHaveChanged();});
 		//$('#seasonPartFilter').on("change", function (event){filtersHaveChanged();});
-		
+
 		$('#circleTeamSelector').onchange = filtersHaveChanged();
 
 	});
-	
-	
-	
+
+
+
 </script>
 
 <script>
 	//The page calls this function when the data has been loaded for the first time.
 	function dataIsREady(){
 		//call Next functions.. to draw visualizations.
-		
+
 		RoundPlacement(allSeasons,document.getElementById("visualization-1"));
 		drawVisualTwo(allTeams, document.getElementById("visual_holder_overview"));
-		makeRivalry(allTeams, document.getElementById("Rivalry"));
-		
+		makeRivalry(allTeams, document.getElementById("rivalry"));
+
 	}
 
 	//The page calls this function when new filters are selected or changed.
 	function filtersHaveChanged(){
 		//alert("Filters changed. Please redraw your visualization if needed.");
-		
+
 		drawVisualTwo(allTeams, document.getElementById("visual_holder_overview"));
 	}
 </script>
@@ -175,7 +175,7 @@
 						<li><a href="#overview">Overview</a></li>
 						<li><a href="#visualization-1">Season Placement</a></li>
 						<li><a href="#visualization-2">Home VS Away</a></li>
-						<li><a href="#Rivalry">Rivalry</a></li>
+						<li><a href="#rivalry-div">Rivalry</a></li>
 					</ul>
 					<div id="overview">
 						<p>Overview of All games</p>
@@ -183,10 +183,10 @@
 					</div>
 					<div id="visualization-1"></div>
 					<div id="visualization-2">
-						<p>Visualization 2 goes here. Home VS Away games. Red is a
+						<p>Visualization 2 goes here. Home VS Away games. Red is a loss.</p>
 					<svg id="visual_holder"></svg>
 					</div>
-					<div id="Rivalry">
+					<div id="rivalry-div">
 						<svg id="rivalry"></svg>
 					</div>
 				</div>
@@ -223,14 +223,14 @@
 							<option value="2013">2013</option>
 						</select>
 					</div>
-							
+
 					<div class = "filterByIndividualTeam" id="filterByIndividualTeam" style = "display: none; position:relative;top:0px;float: right; border: 2px; border-style: solid; border-radius: 15px;width:95%;height:100px;">
 						<h3>Filter By Team:</h3>
 					</div>
 					<div class = "filterByTeam" id="filterByTeam" style = "display: none; position:relative;top:2px;float: right; border: 2px; border-style: solid; border-radius: 15px;width:95%;height:300px;">
 						<h3>Advance Filter Options</h3>
 						<div class="filterTeam"
-							
+
 							<div id="teamA"></div>
 							<!--
 								<option value="NZTeam">New Zealand Teams</option>
