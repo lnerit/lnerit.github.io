@@ -171,7 +171,13 @@ function makeVisualizationTwo(gameSet, svg){
 		.attr("fill", function(game,i){
 					return (colorScale(game.pointsDifference));
 		})
-		.on('mouseover', function(d) {mouseOverCircle(d);});
+		.on('mouseover', function(d) {
+			mouseOverCircle(d);
+			d3.select(this).style({'stroke': 'yellow', 'stroke-width': 3});
+		})
+		.on('mouseout', function(d){
+			d3.select(this).style({'stroke': 'yellow', 'stroke-width': 0});
+		});
 
 	
 	
