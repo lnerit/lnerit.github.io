@@ -2,15 +2,15 @@ function rank(year) {
 	var list = allSeasons[year];
 	var e = list[list.length-1];
 	var scoreDiff = [];
-	// Take the score difference for finals
+	// Get score differences for the final
 	var scoreHome = parseInt(e.Score.split('–')[0], 10);
 	var scoreAway = parseInt(e.Score.split('–')[1], 10);
 	if (scoreHome > scoreAway) {
-		// home win
+		// home wins
 		scoreDiff.push(e['Home Team']);
 		scoreDiff.push(e['Away Team']);
 	} else {
-		// away win
+		// away wins
 		scoreDiff.push(e['Away Team']);
 		scoreDiff.push(e['Home Team']);
 	}
@@ -20,10 +20,10 @@ function rank(year) {
 	var scoreHome = parseInt(e.Score.split('–')[0], 10);
 	var scoreAway = parseInt(e.Score.split('–')[1], 10);
 	if (scoreHome > scoreAway) {
-		// home won
+		// Game won at home
 		scoreDiff.push(e['Away Team']);
 	} else {
-		// away win
+		// Game won at away
 		scoreDiff.push(e['Home Team']);
 	}
 	e = list[list.length-3];
@@ -31,10 +31,9 @@ function rank(year) {
 	var scoreHome = parseInt(e.Score.split('–')[0], 10);
 	var scoreAway = parseInt(e.Score.split('–')[1], 10);
 	if (scoreHome > scoreAway) {
-		// home wins
+		// Game won at home
 		scoreDiff.push(e['Away Team']);
 	} else {
-		// away wins
 		scoreDiff.push(e['Home Team']);
 	}
 	return scoreDiff;
@@ -47,7 +46,7 @@ function teamRank(dat){
 		data.push(new TeamData(teamList[i]));
 	}
 	dat.forEach(function(d) {
-		console.log(d.Date)
+		//console.log(d.Date)
 		if (d.Date.indexOf('BYES:') === 0) return;
 		var scoreHome = parseInt(d.Score.split('–')[0], 10);
 		var scoreAway = parseInt(d.Score.split('–')[1], 10);

@@ -10,19 +10,8 @@ var allSeasons = {};
 var allTeams = {};
 var allVenues = {};
 var sYear = 2008;
-var sTeam = 'Central Pulse';
-var showYear = 'All';
-
-
-//function to load Season for yearFilter on the HTML page
-function LoadYearToFilterBox(){
-	var select = document.getElementById("yearFilter");
-	for (var i=0;i<listYears.length;i++){
-		var ele=document.createElement("option");
-		ele.textContent=listYears[i];
-		select.appendChild(ele);
-	}
-}
+var netballTeam = 'Southern Steel';
+var showAllYear = 'All';
 
 function TeamData (n) {
 	this.wins = 0;
@@ -194,8 +183,7 @@ d3.csv('data/2008-Table1.csv', function(data){
 									venue.push(i);
 								}
 							});
-							//Remove underdefined and emty entries
-
+							//Remove undefined and emty entries
 							delete allVenues[undefined];
 							delete allVenues[''];
 

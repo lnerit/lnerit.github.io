@@ -12,26 +12,55 @@ function mouseOverCircle(gameRepresentedByCircle){
    $('#info-02').html("Away: "+gameRepresentedByCircle['Away Team']);
    $('#info-03').html("Score: "+gameRepresentedByCircle['Score']);
    $('#info-04').html("Venue: "+gameRepresentedByCircle['Venue']);
-   $('#info-05').html("");
+   $('#info-05').html("Year: "+gameRepresentedByCircle['year']);
    $('#info-06').html("");
 }
 
+var focusTeam = "";
+
+function drawVisualTwo(theData, svg){
+	//empty svg
+	$("#visual_holder_overview").html("")
+	//overwrite value from above.
+	focusTeam = $("#circleTeamSelector").val();
+	if(theData[focusTeam] == undefined) { 
+		//alert(focusTeam + "is an invalid selection.");
+		return;
+	}
+	var gameSet = theData[focusTeam];
+	var gameSetAdjusted = [];
+	
+	//get circleYearSelector
+	var year=$("#circleYearSelector").val();
+	//remove all games that don't match the year.
+	if(year != "All"){
+		for(var i = gameSet.length - 1; i >= 0; i--) {
+			if(gameSet[i].year == year) {
+			   gameSetAdjusted.push(gameSet[i]);
+			}
+		}
+	}else{
+		gameSetAdjusted = gameSet;
+	}
+	console.log(JSON.stringify(gameSetAdjusted));
+	makeVisualizationTwo(gameSetAdjusted, svg);
+}
+
 var configOptions = {
-	verticalOffsetLabel: -20,
-	gravity: 0.21,
-	linkDistance: 10,
-	circleRepelFactor: -140,
-	colours: [d3.rgb(255,0,0), d3.rgb(90,0,0),d3.rgb(0,90,0), d3.rgb(0,255,0)]
+	verticalOffsetLabel: -25,
+	gravity: 0.35,
+	linkDistance: 13,
+	circleRepelFactor: -330,
+	colours: [d3.rgb(255,0,0), d3.rgb(90,0,0),d3.rgb(0,90,0), d3.rgb(0,255,0)],
+	rad: 14
 };
 
-//global to debugge
-var gameSet;
 
-function makeVisualizationTwo(theData, svg){
+function makeVisualizationTwo(gameSet, svg){
 	//Sanity Check.... got data.. got d3?
-	if(theData == undefined || svg == undefined){
-		alert("No data or svg in makeVisualizationTwo."+ svg + theData);
-		return "No data or svg in makeVisualizationTwo.";
+	if(gameSet == undefined || svg == undefined){
+		alert("No gameSet or svg in makeVisualizationTwo."+ svg + gameSet);
+		return "No gameSet or svg in makeVisualizationTwo.";
 	}
 	if(d3 == undefined){		//d3 available. notify and get out if its not available.
 		alert("No d3 object.");
@@ -39,13 +68,9 @@ function makeVisualizationTwo(theData, svg){
 	}
 
 	//Get focus team from teamSelector. teamA.
-	var focusTeam = document.getElementById("teamA").value;
-	var visualizationHeight = 445;
-	var visualizationWidth = 610;
+	var visualizationHeight = 490;
+	var visualizationWidth = 615;
 
-	//overwrite value from above.
-	focusTeam = "Southern Steel";
-	 gameSet = theData[focusTeam];
 	//Storage for various indexes. These are used to tie the force directed layout together. 
 	var indexes = {home : {win: 0, loss:0},
 		       away : {win: 0, loss:0}
@@ -134,17 +159,29 @@ function makeVisualizationTwo(theData, svg){
 		    .interpolate(d3.interpolateRgb)
 		    .range(configOptions.colours);
 		
-	//set of circles ...
+	//set of circles ... add new ones... remove old.. update all.
 	var circles = svgElem.selectAll("circle")
 		.data(gameSet)
 		.enter()
-		.append("circle")
-		.attr("r",10)
+		.append("circle");
+	
+	
+	
+	circles = svgElem.selectAll("circle")
+		.attr("r",configOptions.rad)
 		.attr("fill", function(game,i){
 					return (colorScale(game.pointsDifference));
 		})
-		.on('mouseover', function(d) {mouseOverCircle(d);});
+		.on('mouseover', function(d) {
+			mouseOverCircle(d);
+			d3.select(this).style({'stroke': 'yellow', 'stroke-width': 3});
+		})
+		.on('mouseout', function(d){
+			d3.select(this).style({'stroke': 'yellow', 'stroke-width': 0});
+		});
 
+	
+	
 	//set of labels.
 	var labels = svgElem.selectAll("text")
 		.data([{lbl: "Home!"},

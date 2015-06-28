@@ -6,7 +6,15 @@
   border-radius: 15px;
   vertical-align: top;
 }
-
+#outerContainer {
+    margin-left: auto;
+    margin-right: auto;
+    width: 1000px;
+    border: 1px solid;
+}
+ teamA {
+       white-space: pre;
+  }
 .title {
   margin-top: 5px;
   vertical-align: top;
@@ -188,3 +196,25 @@ g.opt.selected{
 .line.selected {
 	opacity:0.2;
 }
+select {
+        resize: horizontal;
+        width: 200px;
+    }
+input {
+        resize: horizontal;
+        width: 100px;
+        background-position: -50px 0;
+    }
+
+    input:active {
+        width: auto;   
+    }
+
+    input:focus {
+        min-width: 100px;
+    }
+
+
+ 
+
+
